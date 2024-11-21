@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Metro Mate</string>
     <string name="station_name">Station Name</string>
-    <string name="hint_search_input">역 이름을 입력하세요</string>
+    <string name="hint_search_input">검색</string>
+    <string name="search_button">검색</string>
     <string name="home_title">홈</string>
     <string name="timetable_title">시간표</string>
     <string name="fare_title">요금 계산</string>
