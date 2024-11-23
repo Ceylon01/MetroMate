@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Metro_Mate</string>
+    <string name="app_name">Metro Mate</string>
+    <string name="station_name">Station Name</string>
+    <string name="menu_description">메뉴</string>
+    <string name="search_label">검색</string>
+    <string name="hint_search_input">검색</string>
+    <string name="search_button">검색</string>
+    <string name="home_title">홈</string>
+    <string name="timetable_title">시간표</string>
+    <string name="fare_title">요금 계산</string>
+    <string name="fare_description">요금 계산 항목이 여기에 표시됩니다.</string>
+    <string name="settings_title">설정</string>
+    <string name="settings_description">앱 설정 항목이 여기에 표시됩니다.</string>
+    <string name="dark_mode_option">다크 모드</string>
+    <string name="notification_option">알림 설정</string>
+
+
 </resources>
