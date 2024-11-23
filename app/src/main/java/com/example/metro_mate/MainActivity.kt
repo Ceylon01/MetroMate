@@ -1,47 +1,42 @@
 package com.example.metro_mate
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.metro_mate.ui.theme.Metro_MateTheme
+import com.example.metro_mate.data.Edge
+import com.example.metro_mate.data.SubwayDataLoader
+import com.example.metro_mate.data.SubwayGraph
+import com.example.metro_mate.domain.aStarSearch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Metro_MateTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+        // 데이터 로드
+        val (stations, edges) = SubwayDataLoader(this).loadSubwayData()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Metro_MateTheme {
-        Greeting("Android")
+        // 그래프 생성
+        val graph = SubwayGraph(edges)
+
+        // 경로 탐색 예제
+        val shortestPathByTime = aStarSearch(
+            graph = graph,
+            start = 101,
+            goal = 104,
+            heuristic = { _, _ -> 0 },
+            criterion = { it.time } // 시간 기준
+        )
+
+        val shortestPathByCost = aStarSearch(
+            graph = graph,
+            start = 101,
+            goal = 104,
+            heuristic = { _, _ -> 0 },
+            criterion = { it.cost } // 비용 기준
+        )
+
+        Log.d("MetroMate", "Shortest Path by Time: $shortestPathByTime")
+        Log.d("MetroMate", "Shortest Path by Cost: $shortestPathByCost")
     }
 }
