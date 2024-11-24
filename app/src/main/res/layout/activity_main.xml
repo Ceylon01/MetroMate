@@ -16,6 +16,22 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Bottom Sheet -->
+    <LinearLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:behavior_expandedOffset="84dp"
+        app:behavior_fitToContents="false"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="618dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    </LinearLayout>
 
     <!-- 노선도 컨테이너 -->
     <FrameLayout

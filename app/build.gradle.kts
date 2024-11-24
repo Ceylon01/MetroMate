@@ -5,12 +5,16 @@ plugins {
 
 android {
     namespace = "com.example.metro_mate"
-    compileSdk = 34
+    compileSdk = 35
+
+    viewBinding {
+        enable = true
+    }
 
     defaultConfig {
         applicationId = "com.example.metro_mate"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,10 +41,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        compose = false
     }
     packaging {
         resources {
