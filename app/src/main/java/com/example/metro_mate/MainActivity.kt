@@ -2,18 +2,15 @@ package com.example.metro_mate
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-
-import com.example.metro_mate.data.Edge // Edge 클래스 import
+import com.example.metro_mate.data.Edge
 import com.example.metro_mate.data.SubwayDataLoader
 import com.example.metro_mate.data.SubwayGraph
 import com.example.metro_mate.domain.aStarSearch
 import com.example.metro_mate.utils.calculateTotalCost
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         // 데이터 로드
         val loader = SubwayDataLoader(this)
@@ -24,15 +21,10 @@ class MainActivity : ComponentActivity() {
             Edge(edge.start, edge.end, edge.time, edge.distance, edge.cost)
         }
 
+        // 데이터 검증
         if (stations.isEmpty() || convertedEdges.isEmpty()) {
             throw IllegalStateException("지하철 데이터가 비어 있습니다.")
-
         }
-    ) { innerPadding ->
-        NavigationHost(navController = navController, modifier = Modifier.padding(innerPadding))
-    }
-}
-
 
         // 그래프 생성
         val graph = SubwayGraph(convertedEdges)
@@ -49,10 +41,7 @@ class MainActivity : ComponentActivity() {
         // 경로가 없을 경우 처리
         if (shortestPath.isEmpty()) {
             throw IllegalStateException("경로를 찾을 수 없습니다.")
-
         }
-    }
-}
 
         // 총 비용 계산
         val totalCost = calculateTotalCost(shortestPath, convertedEdges)
@@ -60,30 +49,5 @@ class MainActivity : ComponentActivity() {
         // 결과 출력 (테스트용)
         println("Shortest Path: $shortestPath")
         println("Total Cost: $totalCost")
-
     }
 }
-
-// 아래는 각 화면의 Composable 함수 예시
-@Composable
-fun HomeScreen() {
-    Text("Home Screen")
-}
-
-@Composable
-fun TimetableScreen() {
-    Text("Timetable Screen")
-}
-
-@Composable
-fun FareScreen() {
-    Text("Fare Screen")
-}
-
-@Composable
-fun SettingsScreen() {
-    Text("Settings Screen")
-}
-
-// 네비게이션 아이템 데이터 클래스
-data class BottomNavItem(val route: String, val title: String, val icon: Int)
