@@ -1,7 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- 라이트 테마 -->
-    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.Metro_Mate" parent="Theme.MaterialComponents.DayNight">
         <!-- 주요 색상 -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
@@ -11,7 +11,7 @@
     </style>
 
     <!-- 다크 테마 -->
-    <style name="Theme.MyApp.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Metro_Mate.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondary">@color/colorSecondary</item>
