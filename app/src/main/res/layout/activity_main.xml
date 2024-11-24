@@ -15,31 +15,25 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Bottom Sheet -->
-    <LinearLayout
-        android:id="@+id/bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="640dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="3dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        app:behavior_expandedOffset="84dp"
-        app:behavior_fitToContents="false"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="618dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-    </LinearLayout>
-
     <!-- 노선도 컨테이너 -->
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="729dp"
+        android:layout_height="727dp"
         android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/toolbar"
         android:background="@color/colorSecondary" />
+
+    <!-- Bottom Sheet -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="712dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bottom_sheet_background"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
 
     <!-- 하단 네비게이션 바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

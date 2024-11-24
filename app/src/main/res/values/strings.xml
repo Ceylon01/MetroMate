@@ -6,6 +6,7 @@
     <string name="hint_search_input">검색</string>
     <string name="search_button">검색</string>
     <string name="home_title">홈</string>
+    <string name="favorites_descripton">즐겨찾기</string>
     <string name="timetable_title">시간표</string>
     <string name="fare_title">요금 계산</string>
     <string name="fare_description">요금 계산 항목이 여기에 표시됩니다.</string>
