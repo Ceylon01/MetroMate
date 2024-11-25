@@ -4,7 +4,11 @@
     <!-- Background 색상 설정 -->
     <solid android:color="@color/colorPrimary" />
 
-    <!-- 모서리를 둥글게 설정 -->
-    <corners android:radius="10dp" />
+    <!-- 개별 모서리 반경 설정 -->
+    <corners
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"/>
 
 </shape>

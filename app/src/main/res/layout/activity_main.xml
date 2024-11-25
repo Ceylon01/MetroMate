@@ -1,9 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <!-- 맵 컨테이너 영역 -->
+    <FrameLayout
+        android:id="@+id/map_container_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom_navigation">
+
+        <!-- 노선도 컨테이너 -->
+        <FrameLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorSecondary" />
+
+        <!-- Bottom Sheet -->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/bottom_sheet"
+            android:name="com.example.metro_mate.fragments.FavoritesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="727dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bottom_sheet_background"
+            app:behavior_peekHeight="727dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:layout="@layout/fragment_favorites" />
+    </FrameLayout>
 
     <!-- 상단 툴바 -->
     <androidx.appcompat.widget.Toolbar
@@ -11,36 +40,14 @@
         android:layout_width="match_parent"
         android:layout_height="84dp"
         android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- 노선도 컨테이너 -->
-    <FrameLayout
-        android:id="@+id/map_container"
-        android:layout_width="match_parent"
-        android:layout_height="727dp"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/toolbar"
-        android:background="@color/colorSecondary" />
-
-    <!-- Bottom Sheet -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="712dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/bottom_sheet_background"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!-- 하단 네비게이션 바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconSize="60dp"
@@ -56,9 +63,9 @@
         android:layout_height="84dp"
         android:layout_marginTop="0dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="ExtraText">>
 
-        <!-- 메뉴 버튼 -->
         <ImageView
             android:id="@+id/menu_button"
             android:layout_width="48dp"
@@ -69,7 +76,6 @@
             android:padding="0dp"
             android:src="@drawable/ic_menu" />
 
-        <!-- 검색창과 검색 버튼 -->
         <RelativeLayout
             android:layout_width="328dp"
             android:layout_height="48dp"
@@ -111,4 +117,7 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+    <!-- 메뉴 버튼 -->
+
+    <!-- 검색창과 검색 버튼 -->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
