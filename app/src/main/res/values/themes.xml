@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.MetromMate" parent="Base.Theme.MetroMate" />
+    <style name="Theme.MetroMate" parent="Base.Theme.MetroMate" />
 </resources>
