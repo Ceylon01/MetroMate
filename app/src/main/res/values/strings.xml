@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Metro Mate</string>
+    <string name="app_name">Metromate</string>
     <string name="station_name">Station Name</string>
     <string name="hint_search_input">검색</string>
     <string name="search_button">검색</string>
@@ -11,6 +11,8 @@
     <string name="settings_description">앱 설정 항목이 여기에 표시됩니다.</string>
     <string name="dark_mode_option">다크 모드</string>
     <string name="notification_option">알림 설정</string>
+    <string name="menu_description">메뉴</string>
+    <string name="resize_indicator">슬라이드 핸들</string>
 
 
 </resources>

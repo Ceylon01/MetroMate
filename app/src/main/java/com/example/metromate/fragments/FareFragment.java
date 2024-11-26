@@ -16,7 +16,7 @@ public class FareFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // fragment_favorites.xml 레이아웃을 연결
+        // fragment_fare.xml 레이아웃을 연결
         return inflater.inflate(R.layout.fragment_fare, container, false);
     }
 }

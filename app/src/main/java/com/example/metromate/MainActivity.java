@@ -1,57 +1,83 @@
 package com.example.metromate;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.metromate.fragments.FareFragment;
 import com.example.metromate.fragments.HomeFragment;
-import com.example.metromate.fragments.TimetableFragment;
 import com.example.metromate.fragments.SettingsFragment;
+import com.example.metromate.fragments.TimetableFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    private final Map<Integer, Fragment> fragmentMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // BottomSheetBehavior 초기화
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        // BottomSheet 기본 설정
+        bottomSheetBehavior.setPeekHeight(300); // BottomSheet 최소 높이
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // 기본 상태: 접힘
+
+        // BottomSheet 상태 변경 리스너
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    // BottomSheet가 확장되었을 때 처리
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    // BottomSheet가 접힘 상태로 돌아왔을 때 처리
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // BottomSheet 슬라이드 중 처리
+                // slideOffset: 0.0 (접힘) ~ 1.0 (완전 확장)
+            }
+        });
+
+        // Fragment Map 초기화
+        fragmentMap.put(R.id.nav_home, new HomeFragment());
+        fragmentMap.put(R.id.nav_timetable, new TimetableFragment());
+        fragmentMap.put(R.id.nav_fare, new FareFragment());
+        fragmentMap.put(R.id.nav_settings, new SettingsFragment());
+
         // BottomNavigationView 초기화
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnItemSelectedListener(navListener);
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = fragmentMap.get(item.getItemId());
+            if (selectedFragment != null) {
+                switchFragment(selectedFragment);
+            }
+            return true;
+        });
 
-        // 첫 화면: 홈 화면 표시
+        // 첫 화면: HomeFragment로 초기화
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
-                    .commit();
+            switchFragment(new HomeFragment());
         }
     }
 
-    // BottomNavigationView 아이템 선택 리스너 구현
-    private final BottomNavigationView.OnItemSelectedListener navListener =
-            item -> {
-                Fragment selectedFragment = null;
-
-                // 메뉴 ID에 따라 프래그먼트 전환
-                if (item.getItemId() == R.id.nav_home) {
-                    selectedFragment = new HomeFragment();
-                } else if (item.getItemId() == R.id.nav_timetable) {
-                    selectedFragment = new TimetableFragment();
-                } else if (item.getItemId() == R.id.nav_fare) {
-                    selectedFragment = new FareFragment();
-                } else if (item.getItemId() == R.id.nav_settings) {
-                    selectedFragment = new SettingsFragment();
-                }
-
-                // 선택된 프래그먼트를 화면에 표시
-                if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, selectedFragment)
-                            .commit();
-                }
-
-                return true;
-            };
+    // 프래그먼트 전환 메서드
+    private void switchFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.bottom_sheet_content, fragment)
+                .commit();
+    }
 }
