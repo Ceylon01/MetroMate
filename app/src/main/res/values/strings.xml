@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Metromate</string>
+    <string name="app_name">MetroMate</string>
     <string name="station_name">Station Name</string>
     <string name="hint_search_input">검색</string>
     <string name="search_button">검색</string>
