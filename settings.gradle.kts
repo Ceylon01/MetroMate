@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Metro_Mate"
+rootProject.name = "MetroMate"
 include(":app")
+ 
