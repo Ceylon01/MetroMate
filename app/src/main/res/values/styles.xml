@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App 기본 테마 -->
+    <style name="Theme.MetroMate" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <!-- 스플래쉬 테마 -->
+    <style name="Theme.MetroMate.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 시스템 배경 프리뷰 비활성화 -->
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+</resources>
