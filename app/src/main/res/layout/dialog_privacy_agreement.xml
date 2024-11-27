@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/privacy_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="개인정보 동의"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/privacy_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="앱 사용을 위해 개인정보 동의가 필요합니다."
+        android:paddingBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_disagree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거부" />
+
+        <Button
+            android:id="@+id/button_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="동의"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+</LinearLayout>
