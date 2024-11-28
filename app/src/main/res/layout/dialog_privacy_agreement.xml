@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="동의"
             android:layout_marginStart="16dp"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/textColorPrimary" />
+            android:backgroundTint="@color/splash_background"
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>
