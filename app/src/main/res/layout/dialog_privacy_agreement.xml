@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/dialog_shadow">
 
     <TextView
         android:id="@+id/privacy_title"
@@ -19,6 +20,7 @@
         android:id="@+id/privacy_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
         android:text="앱 사용을 위해 개인정보 동의가 필요합니다."
         android:paddingBottom="16dp" />
 
@@ -32,13 +34,17 @@
             android:id="@+id/button_disagree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="거부" />
+            android:text="거부"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/textColorPrimary" />
 
         <Button
             android:id="@+id/button_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="동의"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/textColorPrimary" />
     </LinearLayout>
 </LinearLayout>

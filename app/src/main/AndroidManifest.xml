@@ -21,6 +21,6 @@
         </activity>
 
         <!-- MainActivity 설정 -->
-        <activity android:name=".MainActivity" android:exported="true" />
+        <activity android:name=".DataInitializationActivity" android:exported="true" />
     </application>
 </manifest>

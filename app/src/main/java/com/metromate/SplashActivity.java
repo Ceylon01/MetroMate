@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
 
         // 일정 시간 뒤에 MainActivity로 이동
         new android.os.Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, DataInitializationActivity.class);
             startActivity(intent);
             finish();
         }, 3000); // 3000ms = 3초
