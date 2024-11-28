@@ -13,6 +13,7 @@
     <string name="notification_option">알림 설정</string>
     <string name="menu_description">메뉴</string>
     <string name="resize_indicator">슬라이드 핸들</string>
+    <string name="splash_image">스플래시 이미지</string>
 
 
 </resources>
