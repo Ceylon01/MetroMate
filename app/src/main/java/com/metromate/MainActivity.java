@@ -12,6 +12,7 @@ import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.SettingsFragment;
 import com.metromate.fragments.TimetableFragment;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         // 초기화 상태 확인
         if (!isInitializationComplete()) {
             // 초기화가 완료되지 않았다면 DataInitializationActivity 실행
-            Intent intent = new Intent(this, DataInitializationActivity.class);
+            Intent intent = new Intent(this, DataInitActivity.class);
             startActivity(intent);
             finish(); // MainActivity 종료
             return;
