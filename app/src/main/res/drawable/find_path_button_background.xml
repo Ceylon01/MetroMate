@@ -2,9 +2,5 @@
     <solid android:color="@color/white" /> <!-- 버튼 배경색 -->
     <corners android:radius="26dp" /> <!-- 둥근 모서리 (동그라미) -->
     <padding android:left="2dp" android:right="2dp" android:top="2dp" android:bottom="2dp" />
-    <shadow
-        android:shadowColor="#40000000"
-        android:shadowDx="0dp"
-        android:shadowDy="2dp"
-        android:shadowRadius="8dp" />
+
 </shape>
