@@ -3,6 +3,9 @@ package com.metromate;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.metromate.PathFinding.SubwayDataLoader;
+import com.metromate.Privacy.PrivacyConsentDialog;
 import com.metromate.models.SubwayData;
 
 public class DataInitActivity extends AppCompatActivity {

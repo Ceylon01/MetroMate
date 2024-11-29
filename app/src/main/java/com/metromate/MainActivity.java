@@ -58,17 +58,17 @@ public class MainActivity extends AppCompatActivity {
     private void setupButtons() {
         // 길찾기 및 요금 계산 버튼 설정
         ImageButton findPathButton = findViewById(R.id.find_path_button);
-//        Button fareCalculationButton = findViewById(R.id.fare_calculation_button);
+        ImageButton fareCalculationButton = findViewById(R.id.nav_fare);
 
         findPathButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, PathFindingActivity.class);
             startActivity(intent);
         });
 
-//        fareCalculationButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, FareCalculationActivity.class);
-//            startActivity(intent);
-//        });
+        fareCalculationButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FareCalculationActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupBottomNavigation() {
