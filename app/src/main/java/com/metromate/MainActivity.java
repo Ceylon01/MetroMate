@@ -3,7 +3,7 @@ package com.metromate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupButtons() {
         // 길찾기 및 요금 계산 버튼 설정
-        Button findPathButton = findViewById(R.id.find_path_button);
+        ImageButton findPathButton = findViewById(R.id.find_path_button);
 //        Button fareCalculationButton = findViewById(R.id.fare_calculation_button);
 
         findPathButton.setOnClickListener(v -> {
