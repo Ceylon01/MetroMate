@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 출발역 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출발역"
+            android:textSize="16sp"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edittext_start_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="출발역 이름 또는 번호 입력"
+            android:inputType="text" />
+
+        <!-- 도착역 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도착역"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edittext_end_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="도착역 이름 또는 번호 입력"
+            android:inputType="text" />
+
+        <!-- 나이 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용자 나이"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edittext_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="나이 입력 (숫자만)"
+            android:inputType="number" />
+
+        <!-- 계산 버튼 -->
+        <Button
+            android:id="@+id/button_calculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="요금 계산"
+            android:layout_marginTop="24dp" />
+
+        <!-- 결과 표시 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="결과"
+            android:textSize="16sp"
+            android:paddingTop="16dp" />
+
+        <!-- 카드 결과 -->
+        <TextView
+            android:id="@+id/textview_result_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="카드 요금 결과: "
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+        <!-- 현금 결과 -->
+        <TextView
+            android:id="@+id/textview_result_cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="현금 요금 결과: "
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
+</ScrollView>

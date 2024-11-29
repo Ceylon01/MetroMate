@@ -3,16 +3,20 @@ package com.metromate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.SettingsFragment;
 import com.metromate.fragments.TimetableFragment;
+import com.metromate.fare.FareCalculationActivity;
+import com.metromate.PathFinding.PathFindingActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,36 +28,50 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 초기화 상태 확인
         if (!isInitializationComplete()) {
-            // 초기화가 완료되지 않았다면 DataInitializationActivity 실행
             Intent intent = new Intent(this, DataInitActivity.class);
             startActivity(intent);
-            finish(); // MainActivity 종료
+            finish();
             return;
         }
 
-        // 초기화가 완료된 경우, 레이아웃 설정
         setContentView(R.layout.activity_main);
 
-        // UI 및 네비게이션 초기화
+        // 추가된 버튼 설정
+        setupButtons();
+
+        // 기존 기능: BottomNavigation 및 BottomSheet 설정
         setupBottomNavigation();
         setupBottomSheet();
 
-        // 첫 화면: HomeFragment로 초기화
+        // 첫 화면 초기화
         if (savedInstanceState == null) {
             switchFragment(new HomeFragment());
         }
     }
 
     private boolean isInitializationComplete() {
-        // 초기화 여부 확인 (SharedPreferences 사용)
         return getSharedPreferences("AppPrefs", MODE_PRIVATE)
                 .getBoolean("isInitialized", false);
     }
 
+    private void setupButtons() {
+        // 길찾기 및 요금 계산 버튼 설정
+        Button findPathButton = findViewById(R.id.find_path_button);
+//        Button fareCalculationButton = findViewById(R.id.fare_calculation_button);
+
+        findPathButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PathFindingActivity.class);
+            startActivity(intent);
+        });
+
+//        fareCalculationButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, FareCalculationActivity.class);
+//            startActivity(intent);
+//        });
+    }
+
     private void setupBottomNavigation() {
-        // BottomNavigationView와 Fragment 초기화
         fragmentMap.put(R.id.nav_home, new HomeFragment());
         fragmentMap.put(R.id.nav_timetable, new TimetableFragment());
         fragmentMap.put(R.id.nav_fare, new FareFragment());
@@ -70,23 +88,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBottomSheet() {
-        // BottomSheetBehavior 초기화
         View bottomSheet = findViewById(R.id.bottom_sheet);
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        // BottomSheet 기본 설정
-        bottomSheetBehavior.setPeekHeight(300); // 최소 높이
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // 접힌 상태
+        bottomSheetBehavior.setPeekHeight(300);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-        // BottomSheet 상태 변경 리스너
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    // 확장 상태 처리
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    // 접힘 상태 처리
-                }
+                // 상태 변경 처리
             }
 
             @Override
@@ -97,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchFragment(Fragment fragment) {
-        // 프래그먼트 전환
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.bottom_sheet_content, fragment)
