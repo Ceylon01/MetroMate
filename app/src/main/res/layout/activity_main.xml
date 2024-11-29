@@ -47,15 +47,14 @@
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="120dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/find_path_button_background"
-        android:src="@drawable/ic_find_path"
+        android:src="@drawable/ic_find"
         android:contentDescription="@string/find_path_button"
         android:elevation="8dp"
         android:clickable="true"
-        android:focusable="true"
-        app:tint="@color/mm_blue" />
+        android:focusable="true" />
 
     <!-- 상단 툴바 -->
     <androidx.appcompat.widget.Toolbar
