@@ -24,10 +24,10 @@
         <!-- MainActivity 설정 -->
         <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".DataInitActivity" />
-        <activity android:name=".PathFinding.AStarTestActivity" />
+        <!--<activity android:name=".PathFinding.AStarTestActivity" />
         <activity android:name=".PathFinding.PathFindingActivity" />
         <activity android:name=".fare.FareCalculationActivity" />
-
+-->
 
     </application>
 </manifest>
