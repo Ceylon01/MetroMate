@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.metromate">
 
-
-<application
+    <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,10 +23,10 @@
         <!-- MainActivity 설정 -->
         <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".DataInitActivity" />
-        <!--<activity android:name=".PathFinding.AStarTestActivity" />
+        <activity android:name=".PathFinding.AStarTestActivity" />
         <activity android:name=".PathFinding.PathFindingActivity" />
         <activity android:name=".fare.FareCalculationActivity" />
--->
+
 
     </application>
 </manifest>

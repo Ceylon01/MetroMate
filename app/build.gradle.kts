@@ -35,12 +35,9 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.fragment)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.gson) // Gson 추가
-    implementation("androidx.fragment:fragment:1.8.5")
-    implementation("com.google.android.material:material:1.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

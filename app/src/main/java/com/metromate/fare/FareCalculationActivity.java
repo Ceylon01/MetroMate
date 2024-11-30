@@ -1,4 +1,3 @@
-/*
 package com.metromate.fare;
 
 import android.os.Bundle;
@@ -128,4 +127,3 @@ public class FareCalculationActivity extends AppCompatActivity {
         return edgeList;
     }
 }
-*/
