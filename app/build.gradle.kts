@@ -35,6 +35,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.fragment)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.gson) // Gson 추가
