@@ -1,9 +1,7 @@
 package com.metromate;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,106 +9,89 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
-import com.metromate.fragments.SettingsFragment;
+import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.TimetableFragment;
-import com.metromate.fare.FareCalculationActivity;
-import com.metromate.PathFinding.PathFindingActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private final Map<Integer, Fragment> fragmentMap = new HashMap<>();
+
+    private BottomSheetBehavior<View> bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (!isInitializationComplete()) {
-            Intent intent = new Intent(this, DataInitActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_main);
 
-        // 추가된 버튼 설정
-        setupButtons();
-
-        // 기존 기능: BottomNavigation 및 BottomSheet 설정
-        setupBottomNavigation();
-        setupBottomSheet();
-
-        // 첫 화면 초기화
-        if (savedInstanceState == null) {
-            switchFragment(new HomeFragment());
-        }
-    }
-
-    private boolean isInitializationComplete() {
-        return getSharedPreferences("AppPrefs", MODE_PRIVATE)
-                .getBoolean("isInitialized", false);
-    }
-
-    private void setupButtons() {
-        // 길찾기 및 요금 계산 버튼 설정
-        ImageButton findPathButton = findViewById(R.id.find_path_button);
-        ImageButton fareCalculationButton = findViewById(R.id.nav_fare);
-
-        findPathButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, PathFindingActivity.class);
-            startActivity(intent);
-        });
-
-        fareCalculationButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FareCalculationActivity.class);
-            startActivity(intent);
-        });
-    }
-
-    private void setupBottomNavigation() {
-        fragmentMap.put(R.id.nav_home, new HomeFragment());
-        fragmentMap.put(R.id.nav_timetable, new TimetableFragment());
-        fragmentMap.put(R.id.nav_fare, new FareFragment());
-        fragmentMap.put(R.id.nav_settings, new SettingsFragment());
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = fragmentMap.get(item.getItemId());
-            if (selectedFragment != null) {
-                switchFragment(selectedFragment);
-            }
-            return true;
-        });
-    }
-
-    private void setupBottomSheet() {
+        // Bottom Sheet 초기화
         View bottomSheet = findViewById(R.id.bottom_sheet);
-        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        bottomSheetBehavior.setPeekHeight(300);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        // 중간 상태 높이 설정 (화면 높이의 1/2)
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        int halfScreenHeight = screenHeight / 2;
 
+        // Bottom Sheet 초기 상태 설정
+        bottomSheetBehavior.setPeekHeight(halfScreenHeight); // 중간 상태 높이 설정
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // 중간 상태로 시작
+        bottomSheetBehavior.setHideable(true); // 완전히 숨길 수 있도록 설정
+
+        // Bottom Sheet 상태 변경 리스너 추가
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                // 상태 변경 처리
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    // 완전히 확장된 상태
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    // 중간 상태
+                } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    // 완전히 숨겨진 상태
+                }
             }
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // 슬라이드 중 처리
+                // 슬라이드 중
             }
+        });
+
+        // BottomNavigationView 초기화
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Default 화면으로 HomeFragment 설정
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment());
+        }
+
+        // BottomNavigationView 버튼 클릭 리스너
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+
+            if (item.getItemId() == R.id.nav_home) {
+                selectedFragment = new HomeFragment(); // HomeFragment 로드
+            } else if (item.getItemId() == R.id.nav_fare) {
+                selectedFragment = new FareFragment(); // FareFragment 로드
+            } else if (item.getItemId() == R.id.nav_timetable) {
+                selectedFragment = new TimetableFragment(); // TimetableFragment 로드
+            }
+
+            if (selectedFragment != null) {
+                // 숨겨진 상태라면 중간 단계로 복귀
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                // Fragment 로드
+                loadFragment(selectedFragment);
+                return true;
+            }
+            return false;
         });
     }
 
-    private void switchFragment(Fragment fragment) {
+    // Fragment 로드 메서드
+    private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.bottom_sheet_content, fragment)
+                .replace(R.id.bottom_sheet_content, fragment) // `R.id.bottom_sheet_content`가 FragmentContainerView ID여야 함
                 .commit();
     }
 }
