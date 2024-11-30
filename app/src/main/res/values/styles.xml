@@ -11,5 +11,7 @@
     <style name="Theme.MetroMate.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 시스템 배경 프리뷰 비활성화 -->
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowBackground">@color/mm_blue</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>
