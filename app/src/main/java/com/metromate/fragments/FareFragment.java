@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.metromate.R;
 
+
 public class FareFragment extends Fragment {
 
     @Nullable
