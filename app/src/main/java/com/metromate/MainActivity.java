@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.TimetableFragment;
+import com.metromate.fragments.BookmarksFragment; // 북마크 추가
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new FareFragment(); // FareFragment 로드
             } else if (item.getItemId() == R.id.nav_timetable) {
                 selectedFragment = new TimetableFragment(); // TimetableFragment 로드
+            } else if (item.getItemId() == R.id.nav_bookmark) { // 이름 변경 반영
+                selectedFragment = new BookmarksFragment(); // BookmarksFragment 로드
             }
 
             if (selectedFragment != null) {
