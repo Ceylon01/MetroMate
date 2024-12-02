@@ -7,7 +7,7 @@
     <string name="timetable_title">시간표</string>
     <string name="fare_title">요금 계산</string>
     <string name="fare_description">요금 계산 항목이 여기에 표시됩니다.</string>
-    <string name="settings_title">설정</string>
+    <string name="settings_bookmark">즐겨찾기</string>
     <string name="settings_description">앱 설정 항목이 여기에 표시됩니다.</string>
     <string name="dark_mode_option">다크 모드</string>
     <string name="notification_option">알림 설정</string>
