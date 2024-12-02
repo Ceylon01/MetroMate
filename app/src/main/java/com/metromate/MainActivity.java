@@ -1,7 +1,9 @@
 package com.metromate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,10 +11,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.metromate.fragments.HomeFragment;
+import com.metromate.fragments.BookmarksFragment;
 import com.metromate.fragments.FareFragment;
+import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
-import com.metromate.fragments.BookmarksFragment; // 북마크 추가
+import com.metromate.PathFinding.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +56,19 @@ public class MainActivity extends AppCompatActivity {
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 // 슬라이드 중
             }
+        });
+
+        // 검색창 클릭 이벤트 추가
+        EditText searchInput = findViewById(R.id.search_input); // 검색창
+
+        // 검색창 클릭 시 키보드가 뜨지 않도록 설정
+        searchInput.setFocusable(false);
+        searchInput.setFocusableInTouchMode(false);
+
+        searchInput.setOnClickListener(v -> {
+            // 검색 화면으로 이동
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
         });
 
         // BottomNavigationView 초기화

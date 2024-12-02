@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 검색 입력창 -->
+    <AutoCompleteTextView
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_search_input"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:inputType="text"
+        android:completionThreshold="1"
+        android:textSize="16sp" />
+
+    <!-- 최근 검색어 목록 -->
+    <ListView
+        android:id="@+id/recent_searches_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+</LinearLayout>
