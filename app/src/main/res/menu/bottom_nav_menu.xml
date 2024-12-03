@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_fare"
         android:title="@string/fare_title" />
     <item
-        android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings_title" />
+        android:id="@+id/nav_bookmark"
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/settings_bookmark" />
 </menu>
