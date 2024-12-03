@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.content.res.ColorStateList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.navigation.NavigationView;
 import com.metromate.fragments.BookmarksFragment;
 import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
@@ -22,6 +25,7 @@ import com.metromate.PathFinding.SearchActivity;
 public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior<View> bottomSheetBehavior;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 // 슬라이드 중
+            }
+        });
+
+        // 드로어 메뉴 초기화
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        // 메뉴 버튼 클릭 이벤트
+        ImageView menuButton = findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(v -> {
+            if (drawerLayout != null) {
+                drawerLayout.openDrawer(navigationView); // 드로어 메뉴 열기
             }
         });
 
