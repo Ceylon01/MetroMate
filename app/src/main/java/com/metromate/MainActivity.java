@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new FareFragment(); // FareFragment 로드
             } else if (item.getItemId() == R.id.nav_timetable) {
                 selectedFragment = new TimetableFragment(); // TimetableFragment 로드
-            } else if (item.getItemId() == R.id.nav_bookmark) { // 이름 변경 반영
+            } else if (item.getItemId() == R.id.nav_bookmark) {
                 selectedFragment = new BookmarksFragment(); // BookmarksFragment 로드
             }
 
