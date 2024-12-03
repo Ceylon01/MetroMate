@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.metromate.R;
 
-public class SettingsFragment extends Fragment {
+public class BookmarksFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // fragment_settings.xml 레이아웃을 연결
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        // fragment_bookmarks.xml 레이아웃을 연결
+        return inflater.inflate(R.layout.fragment_bookmarks, container, false);
     }
 }
