@@ -28,6 +28,9 @@
             android:name=".PathFinding.SearchActivity"
             android:exported="true"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".PathFinding.QuickPathActivity" android:exported="true" />
+        <activity android:name=".PathFinding.SearchResultActivity" android:exported="true" />
+
 
     </application>
 </manifest>

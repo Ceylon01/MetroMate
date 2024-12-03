@@ -21,6 +21,7 @@ import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
 import com.metromate.PathFinding.SearchActivity;
+import com.metromate.PathFinding.QuickPathActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
         searchInput.setOnClickListener(v -> {
             // 검색 화면으로 이동
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+        });
+
+        // "빠른 길찾기" 버튼 클릭 이벤트 추가
+        View findPathButton = findViewById(R.id.find_path_button);
+        findPathButton.setOnClickListener(v -> {
+            // QuickPathActivity로 이동
+            Intent intent = new Intent(MainActivity.this, QuickPathActivity.class);
             startActivity(intent);
         });
 
