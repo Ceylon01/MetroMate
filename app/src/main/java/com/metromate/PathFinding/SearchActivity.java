@@ -7,10 +7,16 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.metromate.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -18,11 +24,8 @@ public class SearchActivity extends AppCompatActivity {
     private ListView recentSearchesListView;
     private ArrayAdapter<String> recentSearchesAdapter;
 
-    // 예시: 역 데이터 (실제로는 파일이나 DB에서 불러올 데이터)
-    private List<String> allStations;
-
-    // 최근 검색어 목록
-    private List<String> recentSearches;
+    private List<String> allStations; // 모든 역 이름
+    private List<String> recentSearches; // 최근 검색어 목록
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +36,14 @@ public class SearchActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.search_input);
         recentSearchesListView = findViewById(R.id.recent_searches_list);
 
-        // 예시 역 데이터 (실제 앱에서는 이 데이터를 DB나 파일에서 읽어올 수 있음)
-        allStations = new ArrayList<>();
-        allStations.add("Seoul Station");
-        allStations.add("Gangnam Station");
-        allStations.add("City Hall Station");
-        allStations.add("Myeongji University Station");
-        allStations.add("Myeongdong Station");
+        // 역 데이터 로드
+        allStations = loadStationNamesFromJSON();
+        if (allStations == null) {
+            allStations = new ArrayList<>(); // 데이터 로드 실패 시 빈 리스트로 초기화
+        }
 
         // 최근 검색어 목록 초기화
         recentSearches = new ArrayList<>();
-        recentSearches.add("Seoul Station");
-        recentSearches.add("Gangnam Station");
-        recentSearches.add("City Hall Station");
 
         // 최근 검색 리스트 어댑터 설정
         recentSearchesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentSearches);
@@ -98,9 +96,7 @@ public class SearchActivity extends AppCompatActivity {
 
     // 역 검색 함수
     private void searchForStation(String stationName) {
-        // 예시: 역 검색 결과 처리 (A* 알고리즘 적용 등)
-        // 실제로는 여기서 검색 후 필요한 작업을 할 수 있습니다.
-        // 예시로 Toast로 출력
+        // 예시: 역 검색 결과 처리
         android.widget.Toast.makeText(this, "Searching for: " + stationName, android.widget.Toast.LENGTH_SHORT).show();
 
         // 최근 검색어 목록에 추가 (중복 방지)
@@ -108,5 +104,35 @@ public class SearchActivity extends AppCompatActivity {
             recentSearches.add(0, stationName);  // 최근 검색어 맨 앞에 추가
             recentSearchesAdapter.notifyDataSetChanged();  // 리스트 갱신
         }
+    }
+
+    // JSON에서 역 이름 로드 함수
+    private List<String> loadStationNamesFromJSON() {
+        List<String> stationNames = new ArrayList<>();
+
+        try {
+            // assets/subway_stations.json 파일 읽기
+            InputStream is = getAssets().open("subway_stations.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer, "UTF-8");
+
+            // JSON 파싱
+            Type type = new TypeToken<Map<String, List<Map<String, String>>>>() {}.getType();
+            Map<String, List<Map<String, String>>> data = new Gson().fromJson(json, type);
+
+            // "stations" 키의 값에서 역 이름 가져오기
+            if (data != null && data.containsKey("stations")) {
+                for (Map<String, String> station : data.get("stations")) {
+                    stationNames.add(station.get("name"));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stationNames;
     }
 }
