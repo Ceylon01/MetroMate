@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="name"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/search_background"
         android:hint="@string/hint_search_input"
         android:inputType="text"
         android:padding="12dp"

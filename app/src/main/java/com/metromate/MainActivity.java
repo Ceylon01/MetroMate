@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.content.res.ColorStateList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -73,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
         // BottomNavigationView 초기화
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Active Indicator 색상 변경
+        int customPurpleColor = ContextCompat.getColor(this, R.color.indicatorColor); // 원하는 색상
+        bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(customPurpleColor));
+
 
         // Default 화면으로 HomeFragment 설정
         if (savedInstanceState == null) {

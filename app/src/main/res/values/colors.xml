@@ -5,10 +5,12 @@
 
     <color name="colorSecondary">#D9D9D9</color> <!-- 노선도 배경 색상 -->
     <color name="mm_blue">#002FC9</color> <!-- 스플래쉬 배경 색상 -->
+    <color name="indicatorColor">#22002FC9</color>
 
     <color name="textColorPrimary">#FF000000</color> <!-- 검정 -->
     <color name="textColorSecondary">#3D3D3D</color> <!-- 설명 문구 -->
 
+    <color name="shadow">#22000000</color>
     <color name="black">#000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
 </resources>

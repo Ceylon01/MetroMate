@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_search_input"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/search_background"
         android:inputType="text"
         android:completionThreshold="1"
         android:textSize="16sp" />
