@@ -14,6 +14,7 @@ import com.metromate.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,8 @@ public class SearchActivity extends AppCompatActivity {
     private ListView recentSearchesListView;
     private ArrayAdapter<String> recentSearchesAdapter;
 
-    private List<String> allStations; // 모든 역 이름
-    private List<String> recentSearches; // 최근 검색어 목록
+    private List<String> allStationNames; // 모든 역 이름
+    private List<String> recentSearches;  // 최근 검색어 목록
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,9 @@ public class SearchActivity extends AppCompatActivity {
         recentSearchesListView = findViewById(R.id.recent_searches_list);
 
         // 역 데이터 로드
-        allStations = loadStationNamesFromJSON();
-        if (allStations == null) {
-            allStations = new ArrayList<>(); // 데이터 로드 실패 시 빈 리스트로 초기화
+        allStationNames = loadStationNamesFromJSON();
+        if (allStationNames == null) {
+            allStationNames = new ArrayList<>(); // 데이터 로드 실패 시 빈 리스트로 초기화
         }
 
         // 최근 검색어 목록 초기화
@@ -64,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                 String query = charSequence.toString().toLowerCase();
                 List<String> filteredStations = new ArrayList<>();
 
-                for (String station : allStations) {
+                for (String station : allStationNames) {
                     if (station.toLowerCase().contains(query)) {
                         filteredStations.add(station);
                     }
@@ -84,13 +85,13 @@ public class SearchActivity extends AppCompatActivity {
         recentSearchesListView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedStation = (String) parent.getItemAtPosition(position);
             searchInput.setText(selectedStation);  // 선택된 역 이름을 입력창에 반영
-            searchForStation(selectedStation);  // 역 검색 수행
+            searchForStation(selectedStation);    // 역 검색 수행
         });
 
         // AutoCompleteTextView의 자동 완성 항목 클릭 이벤트
         searchInput.setOnItemClickListener((parent, view, position, id) -> {
             String selectedStation = (String) parent.getItemAtPosition(position);
-            searchForStation(selectedStation);  // 선택된 역 이름으로 검색
+            searchForStation(selectedStation);    // 선택된 역 이름으로 검색
         });
     }
 
@@ -111,13 +112,13 @@ public class SearchActivity extends AppCompatActivity {
         List<String> stationNames = new ArrayList<>();
 
         try {
-            // assets/subway_stations.json 파일 읽기
-            InputStream is = getAssets().open("subway_stations.json");
+            // assets/data/subway_stations.json 파일 읽기
+            InputStream is = getAssets().open("data/subway_stations.json"); // 파일 경로 수정
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            String json = new String(buffer, "UTF-8");
+            String json = new String(buffer, StandardCharsets.UTF_8);
 
             // JSON 파싱
             Type type = new TypeToken<Map<String, List<Map<String, String>>>>() {}.getType();
@@ -129,8 +130,17 @@ public class SearchActivity extends AppCompatActivity {
                     stationNames.add(station.get("name"));
                 }
             }
+            // 데이터 로드 확인을 위해 로그 출력
+            android.util.Log.d("LoadStationData", "Total Stations Loaded: " + stationNames.size());
+            if (!stationNames.isEmpty()) {
+                android.util.Log.d("LoadStationData", "First Station: " + stationNames.get(0));
+            } else {
+                android.util.Log.d("LoadStationData", "No stations found in JSON file.");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
+            android.util.Log.e("LoadStationData", "Failed to load JSON file: " + e.getMessage());
         }
 
         return stationNames;
