@@ -84,7 +84,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:background="@drawable/background_search">
+        android:background="@drawable/background_search_text">
 
             <!-- 메뉴 버튼 -->
         <ImageView

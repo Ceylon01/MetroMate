@@ -19,5 +19,7 @@
     <string name="hint_departure_input">출발지</string>
     <string name="hint_destination_input">도착지</string>
     <string name="hint_stopover_input">경유지</string>
+    <string name="button_stopover">경유지 추가</string>
+    <string name="button_swap">swap</string>
 
 </resources>
