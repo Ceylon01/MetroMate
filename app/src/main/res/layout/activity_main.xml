@@ -26,15 +26,15 @@
         app:behavior_peekHeight="600dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-            <!-- Resize Indicator -->
-            <ImageView
-                android:id="@+id/resize_indicator"
-                android:layout_width="64dp"
-                android:layout_height="32dp"
-                android:layout_gravity="top|center_horizontal"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/resize_indicator"
-                android:src="@drawable/resize_indicator" />
+        <!-- Resize Indicator -->
+        <ImageView
+            android:id="@+id/resize_indicator"
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/resize_indicator"
+            android:src="@drawable/resize_indicator" />
 
             <!-- Bottom Sheet 콘텐츠 -->
             <androidx.fragment.app.FragmentContainerView

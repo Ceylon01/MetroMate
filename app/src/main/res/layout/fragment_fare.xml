@@ -1,24 +1,162 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_marginTop="42dp"
-    android:gravity="center">
+    android:padding="16dp" >
 
+    <!-- 승객 정보 입력 -->
     <TextView
-        android:id="@+id/fare_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fare_title"
-        android:textSize="24sp"
+        android:text="승객 정보"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center" />
+        android:layout_marginBottom="8dp" />
 
+    <RadioGroup
+        android:id="@+id/passenger_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/adult_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
+            android:checked="true"
+            android:text="성인" />
+
+        <RadioButton
+            android:id="@+id/teenager_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
+            android:text="청소년" />
+
+        <RadioButton
+            android:id="@+id/child_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
+            android:text="어린이" />
+    </RadioGroup>
+
+    <!-- 카드/현금 선택 -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fare_description"
-        android:textSize="16sp"
-        android:gravity="center" />
+        android:text="결제 방법"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <RadioGroup
+        android:id="@+id/payment_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카드"
+            android:backgroundTint="@color/mm_blue"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/cash_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현금"
+            android:buttonTint="@color/mm_blue" />
+    </RadioGroup>
+
+    <!-- 출발역 입력 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="출발역"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/start_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="출발역 입력"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search_text"
+        android:textSize="16sp" />
+
+    <!-- 도착역 입력 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="도착역"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/end_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="도착역 입력"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search_text"
+        android:textSize="16sp" />
+
+    <!-- 경유역 입력 (선택 사항) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경유역 (선택)"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/waypoint_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="경유역 입력 (필요시)"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search_text"
+        android:textSize="16sp" />
+
+    <!-- 요금 계산 버튼 -->
+    <Button
+        android:id="@+id/calculate_fare_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="요금 계산"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/mm_blue"
+        android:textColor="@android:color/white" />
+
+    <!-- 결과 표시 -->
+    <TextView
+        android:id="@+id/fare_result_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 요금:"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fare_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0원"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>

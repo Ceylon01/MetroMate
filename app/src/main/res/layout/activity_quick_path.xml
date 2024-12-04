@@ -66,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:divider="@android:color/darker_gray"
+        android:divider="@color/cardview_shadow_start_color"
+        android:background="@color/colorPrimary"
         android:dividerHeight="1dp" />
 </LinearLayout>
