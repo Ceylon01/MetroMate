@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="출발역"
         android:padding="12dp"
-        android:background="@drawable/search_background"
+        android:background="@drawable/background_departure"
         android:inputType="text"
         android:completionThreshold="1"
         android:textSize="16sp" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="경유역"
         android:padding="12dp"
-        android:background="@drawable/search_background"
+        android:background="@drawable/background_stopover"
         android:inputType="text"
         android:completionThreshold="1"
         android:textSize="16sp" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:hint="도착역"
         android:padding="12dp"
-        android:background="@drawable/search_background"
+        android:background="@drawable/background_destination"
         android:inputType="text"
         android:completionThreshold="1"
         android:textSize="16sp" />
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="길찾기"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/primaryColor"
+        android:backgroundTint="@color/mm_blue"
         android:textColor="@android:color/white" />
 
     <!-- 최근 검색 기록 -->
