@@ -4,24 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.content.res.ColorStateList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.navigation.NavigationView;
 import com.metromate.fragments.BookmarksFragment;
 import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
 import com.metromate.PathFinding.SearchActivity;
+import com.metromate.PathFinding.QuickPathActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior<View> bottomSheetBehavior;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 드로어 메뉴 초기화
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        // 메뉴 버튼 클릭 이벤트
+        ImageView menuButton = findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(v -> {
+            if (drawerLayout != null) {
+                drawerLayout.openDrawer(navigationView); // 드로어 메뉴 열기
+            }
+        });
+
         // 검색창 클릭 이벤트 추가
         EditText searchInput = findViewById(R.id.search_input); // 검색창
 
@@ -70,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
         searchInput.setOnClickListener(v -> {
             // 검색 화면으로 이동
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+        });
+
+        // "빠른 길찾기" 버튼 클릭 이벤트 추가
+        View findPathButton = findViewById(R.id.find_path_button);
+        findPathButton.setOnClickListener(v -> {
+            // QuickPathActivity로 이동
+            Intent intent = new Intent(MainActivity.this, QuickPathActivity.class);
             startActivity(intent);
         });
 
