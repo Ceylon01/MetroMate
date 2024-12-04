@@ -1,24 +1,107 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_marginTop="42dp"
-    android:gravity="center">
+    android:padding="16dp">
 
+    <!-- 승객 정보 입력 -->
     <TextView
-        android:id="@+id/fare_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fare_title"
-        android:textSize="24sp"
+        android:text="승객 정보"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center" />
+        android:layout_marginBottom="8dp" />
 
+    <RadioGroup
+        android:id="@+id/passenger_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/adult_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성인" />
+
+        <RadioButton
+            android:id="@+id/teenager_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="청소년" />
+
+        <RadioButton
+            android:id="@+id/child_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="어린이" />
+    </RadioGroup>
+
+    <!-- 카드 사용 여부 -->
+    <CheckBox
+        android:id="@+id/card_usage_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="교통카드 사용" />
+
+    <!-- 거리 입력 -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fare_description"
-        android:textSize="16sp"
-        android:gravity="center" />
+        android:text="거리 (km)"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/distance_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="예: 15" />
+
+    <!-- 환승 여부 -->
+    <CheckBox
+        android:id="@+id/transfer_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="환승 여부" />
+
+    <!-- 같은 노선 여부 -->
+    <CheckBox
+        android:id="@+id/same_line_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="같은 노선에서 환승" />
+
+    <!-- 요금 계산 버튼 -->
+    <Button
+        android:id="@+id/calculate_fare_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="요금 계산"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/mm_blue"
+        android:textColor="@android:color/white" />
+
+    <!-- 결과 표시 -->
+    <TextView
+        android:id="@+id/fare_result_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 요금:"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fare_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0원"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>
