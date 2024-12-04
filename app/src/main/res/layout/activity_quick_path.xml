@@ -1,0 +1,71 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 출발역 입력 -->
+    <AutoCompleteTextView
+        android:id="@+id/start_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="출발역"
+        android:padding="12dp"
+        android:background="@drawable/search_background"
+        android:inputType="text"
+        android:completionThreshold="1"
+        android:textSize="16sp" />
+
+    <!-- 경유역 입력 -->
+    <AutoCompleteTextView
+        android:id="@+id/waypoint_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="경유역"
+        android:padding="12dp"
+        android:background="@drawable/search_background"
+        android:inputType="text"
+        android:completionThreshold="1"
+        android:textSize="16sp" />
+
+    <!-- 도착역 입력 -->
+    <AutoCompleteTextView
+        android:id="@+id/end_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="도착역"
+        android:padding="12dp"
+        android:background="@drawable/search_background"
+        android:inputType="text"
+        android:completionThreshold="1"
+        android:textSize="16sp" />
+
+    <!-- 검색 버튼 -->
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="길찾기"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/primaryColor"
+        android:textColor="@android:color/white" />
+
+    <!-- 최근 검색 기록 -->
+    <TextView
+        android:id="@+id/recent_searches_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최근 검색 기록"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/recent_searches_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+</LinearLayout>

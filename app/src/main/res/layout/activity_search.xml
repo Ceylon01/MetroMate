@@ -29,36 +29,21 @@
             android:layout_marginTop="6dp"
             android:background="#11000000"/>
 
-        <!-- 검색 입력창 -->
-        <AutoCompleteTextView
-            android:id="@+id/search_input"
-            android:layout_width="238dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="0dp"
-            android:paddingStart="8dp"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/hint_search_input"
-            android:inputType="text"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="18sp"
-            android:completionThreshold="1"/>
-
-        <!-- 검색 버튼 -->
-        <ImageView
-            android:id="@+id/search_button"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/search_button"
-            android:padding="0dp"
-            android:src="@drawable/ic_search" />
+    <!-- 검색 입력창 -->
+    <AutoCompleteTextView
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="지하철 역명 검색"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="12dp"
+        android:background="@drawable/background_search"
+        android:inputType="text"
+        android:completionThreshold="1"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp" />
     </RelativeLayout>
 
     <!-- 최근 검색어 목록 -->
