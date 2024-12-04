@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="42dp"
-    android:padding="16dp">
+    android:padding="16dp" >
 
     <!-- 승객 정보 입력 -->
     <TextView
@@ -25,56 +25,111 @@
             android:id="@+id/adult_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
+            android:checked="true"
             android:text="성인" />
 
         <RadioButton
             android:id="@+id/teenager_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
             android:text="청소년" />
 
         <RadioButton
             android:id="@+id/child_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/mm_blue"
             android:text="어린이" />
     </RadioGroup>
 
-    <!-- 카드 사용 여부 -->
-    <CheckBox
-        android:id="@+id/card_usage_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="교통카드 사용" />
-
-    <!-- 거리 입력 -->
+    <!-- 카드/현금 선택 -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="거리 (km)"
+        android:text="결제 방법"
         android:layout_marginTop="16dp"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/distance_input"
+    <RadioGroup
+        android:id="@+id/payment_type_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="예: 15" />
+        android:orientation="horizontal">
 
-    <!-- 환승 여부 -->
-    <CheckBox
-        android:id="@+id/transfer_checkbox"
+        <RadioButton
+            android:id="@+id/card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카드"
+            android:backgroundTint="@color/mm_blue"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/cash_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현금"
+            android:buttonTint="@color/mm_blue" />
+    </RadioGroup>
+
+    <!-- 출발역 입력 -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="환승 여부" />
+        android:text="출발역"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
 
-    <!-- 같은 노선 여부 -->
-    <CheckBox
-        android:id="@+id/same_line_checkbox"
+    <AutoCompleteTextView
+        android:id="@+id/start_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="출발역 입력"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search"
+        android:textSize="16sp" />
+
+    <!-- 도착역 입력 -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="같은 노선에서 환승" />
+        android:text="도착역"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/end_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="도착역 입력"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search"
+        android:textSize="16sp" />
+
+    <!-- 경유역 입력 (선택 사항) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경유역 (선택)"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/waypoint_station_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="경유역 입력 (필요시)"
+        android:completionThreshold="1"
+        android:padding="12dp"
+        android:inputType="text"
+        android:background="@drawable/background_search"
+        android:textSize="16sp" />
 
     <!-- 요금 계산 버튼 -->
     <Button
