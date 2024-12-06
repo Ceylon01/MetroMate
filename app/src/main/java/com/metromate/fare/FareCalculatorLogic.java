@@ -8,7 +8,7 @@ public class FareCalculatorLogic {
     public static int calculateFare(Passenger passenger, Journey journey) {
         // 기본 요금 설정
         int baseFare = passenger.isUsingCard() ? 1250 : 1350;
-        int distance = journey.distance;
+        int distance = journey.getDistance();
 
         // 거리 초과 요금 계산
         int extraFare = 0;
@@ -20,7 +20,7 @@ public class FareCalculatorLogic {
         }
 
         // 환승 추가 요금 계산
-        int transferFare = journey.isTransfer && !journey.isSameLine ? 1000 : 0;
+        int transferFare = (journey.isTransfer() && !journey.isSameLine()) ? 1000 : 0;
 
         // 총 요금 계산
         int totalFare = baseFare + extraFare + transferFare;
