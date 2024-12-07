@@ -40,6 +40,9 @@ public class QuickPathActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         recentSearchesListView = findViewById(R.id.recent_searches_list);
 
+        // Intent에서 전달된 데이터 처리
+        handleIncomingData();
+
         // 역 데이터 로드
         SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
             @Override
@@ -76,6 +79,24 @@ public class QuickPathActivity extends AppCompatActivity {
             String selectedRecord = recentSearches.get(position);
             handleRecentSearch(selectedRecord);
         });
+    }
+
+    // Intent로 전달된 데이터를 처리하여 입력 필드에 채우기
+    private void handleIncomingData() {
+        Intent intent = getIntent();
+        String start = intent.getStringExtra("startStation");
+        String transfer = intent.getStringExtra("transferStation");
+        String end = intent.getStringExtra("endStation");
+
+        if (start != null) {
+            startStationInput.setText(start);
+        }
+        if (transfer != null) {
+            waypointStationInput.setText(transfer);
+        }
+        if (end != null) {
+            endStationInput.setText(end);
+        }
     }
 
     // 입력값을 처리하고 SearchResultActivity로 전달
