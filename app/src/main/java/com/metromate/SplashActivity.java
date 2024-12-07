@@ -23,21 +23,22 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initializeApp() {
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            // 데이터 로드
-            SubwayData subwayData = SubwayDataLoader.loadSubwayData(this);
+        // 데이터를 로드하고 MainActivity로 이동
+        SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(SubwayData subwayData) {
+                if (subwayData != null) {
+                    System.out.println("Total stations: " + subwayData.getStations().size());
+                    System.out.println("Total edges: " + subwayData.getEdges().size());
+                } else {
+                    System.out.println("Failed to load subway data!");
+                    // 오류 처리를 추가할 수도 있음
+                }
 
-            if (subwayData != null) {
-                System.out.println("Total stations: " + subwayData.stations.size());
-                System.out.println("Total edges: " + subwayData.edges.size());
-            } else {
-                System.out.println("Failed to load subway data!");
-                // 오류 처리를 추가할 수도 있음
+                // 3초 대기 후 MainActivity로 이동
+                new Handler(Looper.getMainLooper()).postDelayed(() -> startMainActivity(), 3000);
             }
-
-            // MainActivity로 이동
-            startMainActivity();
-        }, 3000); // 3000ms = 3초
+        });
     }
 
     private void startMainActivity() {
