@@ -21,6 +21,23 @@
     <string name="hint_stopover_input">경유지</string>
     <string name="button_stopover">경유지 추가</string>
     <string name="button_swap">swap</string>
+    <string name="fare_result">총 요금: %d원</string>
+    <string name="passenger_info">승객 정보</string>
+    <string name="adult">성인</string>
+    <string name="teenager">청소년</string>
+    <string name="child">어린이</string>
+    <string name="payment_method">결제 방법</string>
+    <string name="card">카드</string>
+    <string name="cash">현금</string>
+    <string name="departure_station">출발역</string>
+    <string name="departure_station_hint">출발역 입력</string>
+    <string name="arrival_station">도착역</string>
+    <string name="arrival_station_hint">도착역 입력</string>
+    <string name="waypoint_station">경유역 (선택)</string>
+    <string name="waypoint_station_hint">경유역 입력 (필요시)</string>
+    <string name="calculate_fare">요금 계산</string>
+    <string name="total_fare_label">총 요금:</string>
+    <string name="initial_fare_result">0원</string>
     <string name="subway_map_description">노선도 이미지 뷰</string>
 
 </resources>

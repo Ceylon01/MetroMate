@@ -27,10 +27,17 @@
         <activity
             android:name=".PathFinding.SearchActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            />
+
+        <!-- QuickPathActivity 등록 -->
         <activity android:name=".PathFinding.QuickPathActivity" android:exported="true" />
+
+        <!-- SearchResultActivity 등록 -->
         <activity android:name=".PathFinding.SearchResultActivity" android:exported="true" />
 
+        <!-- FareActivity 등록 -->
+        <activity android:name=".fare.FareActivity" android:exported="true" />
 
     </application>
 </manifest>

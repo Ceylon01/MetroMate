@@ -6,7 +6,6 @@ public class Edge {
     private int distance;
     private int time;
 
-    // 생성자
     public Edge(int start, int end, int distance, int time) {
         this.start = start;
         this.end = end;
@@ -14,7 +13,6 @@ public class Edge {
         this.time = time;
     }
 
-    // Getter
     public int getStart() {
         return start;
     }

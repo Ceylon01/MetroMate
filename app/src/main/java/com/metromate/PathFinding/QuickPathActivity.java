@@ -2,6 +2,7 @@ package com.metromate.PathFinding;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,22 +41,27 @@ public class QuickPathActivity extends AppCompatActivity {
         recentSearchesListView = findViewById(R.id.recent_searches_list);
 
         // 역 데이터 로드
-        SubwayData subwayData = SubwayDataLoader.loadSubwayData(this);
-        if (subwayData != null) {
-            stationNames = new ArrayList<>();
-            for (Station station : subwayData.stations) {
-                stationNames.add(station.name);
-            }
-        } else {
-            stationNames = new ArrayList<>();
-            Toast.makeText(this, "역 데이터 로드 실패", Toast.LENGTH_SHORT).show();
-        }
+        SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(SubwayData subwayData) {
+                if (subwayData != null) {
+                    Log.d("QuickPathActivity", "역 데이터 로드 성공");
+                    stationNames = new ArrayList<>();
+                    for (Station station : subwayData.getStations()) {
+                        stationNames.add(station.getName());
+                    }
 
-        // AutoCompleteTextView에 어댑터 설정
-        ArrayAdapter<String> stationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, stationNames);
-        startStationInput.setAdapter(stationAdapter);
-        waypointStationInput.setAdapter(stationAdapter);
-        endStationInput.setAdapter(stationAdapter);
+                    // AutoCompleteTextView에 어댑터 설정
+                    ArrayAdapter<String> stationAdapter = new ArrayAdapter<>(QuickPathActivity.this, android.R.layout.simple_dropdown_item_1line, stationNames);
+                    startStationInput.setAdapter(stationAdapter);
+                    waypointStationInput.setAdapter(stationAdapter);
+                    endStationInput.setAdapter(stationAdapter);
+                } else {
+                    Log.e("QuickPathActivity", "역 데이터 로드 실패");
+                    Toast.makeText(QuickPathActivity.this, "역 데이터 로드 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // 최근 검색어 초기화
         recentSearches = new ArrayList<>();

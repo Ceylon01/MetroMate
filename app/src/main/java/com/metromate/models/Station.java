@@ -1,13 +1,25 @@
 package com.metromate.models;
 
 public class Station {
-    public int id;
-    public String name;
-    public String line;
+    private int id;
+    private String name;
+    private String line;
 
     public Station(int id, String name, String line) {
         this.id = id;
         this.name = name;
         this.line = line;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLine() {
+        return line;
     }
 }

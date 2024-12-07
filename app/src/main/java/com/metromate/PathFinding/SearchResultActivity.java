@@ -37,17 +37,23 @@ public class SearchResultActivity extends AppCompatActivity {
         travelTimeView = findViewById(R.id.travel_time);
 
         // 데이터 로드
-        SubwayData subwayData = SubwayDataLoader.loadSubwayData(this);
-        if (subwayData != null) {
-            stations = subwayData.stations;
-            edges = subwayData.edges;
-        } else {
-            stations = new ArrayList<>();
-            edges = new ArrayList<>();
-            Toast.makeText(this, "지하철 데이터 로드 실패", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(SubwayData subwayData) {
+                if (subwayData != null) {
+                    stations = subwayData.getStations();
+                    edges = subwayData.getEdges();
+                    handleIntentData();
+                } else {
+                    stations = new ArrayList<>();
+                    edges = new ArrayList<>();
+                    Toast.makeText(SearchResultActivity.this, "지하철 데이터 로드 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
+    private void handleIntentData() {
         // Intent에서 입력값 가져오기
         String departureStation = getIntent().getStringExtra("startStation");
         String waypointStation = getIntent().getStringExtra("waypointStation");
@@ -88,8 +94,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private int getStationId(String name) {
         for (Station station : stations) {
-            if (station.name.equals(name)) {
-                return station.id;
+            if (station.getName().equals(name)) {
+                return station.getId();
             }
         }
         return -1;
@@ -133,8 +139,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private String getStationName(int stationId) {
         for (Station station : stations) {
-            if (station.id == stationId) {
-                return station.name;
+            if (station.getId() == stationId) {
+                return station.getName();
             }
         }
         return null;

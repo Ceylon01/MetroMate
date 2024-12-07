@@ -1,11 +1,11 @@
 package com.metromate.models;
 
 public class Journey {
-    public String startStation;
-    public String endStation;
-    public int distance; // 이동 거리 (km)
-    public boolean isTransfer; // 환승 여부
-    public boolean isSameLine; // 동일 노선 여부
+    private String startStation;
+    private String endStation;
+    private int distance;
+    private boolean isTransfer;
+    private boolean isSameLine;
 
     public Journey(String startStation, String endStation, int distance, boolean isTransfer, boolean isSameLine) {
         this.startStation = startStation;
@@ -13,5 +13,17 @@ public class Journey {
         this.distance = distance;
         this.isTransfer = isTransfer;
         this.isSameLine = isSameLine;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public boolean isTransfer() {
+        return isTransfer;
+    }
+
+    public boolean isSameLine() {
+        return isSameLine;
     }
 }
