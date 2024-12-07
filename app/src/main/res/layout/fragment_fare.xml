@@ -25,7 +25,7 @@
             android:id="@+id/adult_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/mm_blue"
+            android:buttonTint="@color/radio_button_tint"
             android:checked="true"
             android:text="성인" />
 
@@ -33,14 +33,14 @@
             android:id="@+id/teenager_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/mm_blue"
+            android:buttonTint="@color/radio_button_tint"
             android:text="청소년" />
 
         <RadioButton
             android:id="@+id/child_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/mm_blue"
+            android:buttonTint="@color/radio_button_tint"
             android:text="어린이" />
     </RadioGroup>
 

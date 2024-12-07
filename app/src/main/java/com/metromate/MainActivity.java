@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.res.ColorStateList;
+import android.graphics.Matrix;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
 import com.metromate.PathFinding.SearchActivity;
 import com.metromate.PathFinding.QuickPathActivity;
+import com.metromate.ZoomableImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +65,21 @@ public class MainActivity extends AppCompatActivity {
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 // 슬라이드 중
             }
+        });
+
+        // ZoomableImageView 초기화 (추가 코드)
+        ZoomableImageView subwayMapView = findViewById(R.id.subway_map_view);
+        subwayMapView.post(() -> {
+            Matrix matrix = new Matrix();
+
+            // 화면 크기에 맞게 확대 비율 계산
+            float scale = Math.max(
+                    (float) subwayMapView.getWidth() / subwayMapView.getDrawable().getIntrinsicWidth(),
+                    (float) subwayMapView.getHeight() / subwayMapView.getDrawable().getIntrinsicHeight()
+            );
+
+            matrix.postScale(scale, scale, 0, 0);
+            subwayMapView.setImageMatrix(matrix);
         });
 
         // 드로어 메뉴 초기화

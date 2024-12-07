@@ -21,5 +21,6 @@
     <string name="hint_stopover_input">경유지</string>
     <string name="button_stopover">경유지 추가</string>
     <string name="button_swap">swap</string>
+    <string name="subway_map_description">노선도 이미지 뷰</string>
 
 </resources>
