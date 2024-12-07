@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 경로 정보 섹션 -->
+        <!-- 최근 경로 섹션 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="경로 정보"
+            android:text="최근 경로"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -29,7 +29,7 @@
             android:columnCount="2"
             android:layout_marginBottom="24dp">
 
-            <!-- 경로 정보 블록 1 -->
+            <!-- 최근 경로 블록 1 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="120dp"
@@ -48,62 +48,7 @@
                     android:gravity="center" />
             </androidx.cardview.widget.CardView>
 
-            <!-- 경로 정보 블록 2 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:background="@drawable/block_background">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="+"
-                    android:textSize="24sp"
-                    android:textColor="#CCCCCC"
-                    android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-        </GridLayout>
-
-        <!-- 역 정보 섹션 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="역 정보"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="8dp" />
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:layout_marginBottom="24dp">
-
-            <!-- 역 정보 블록 1 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:background="@drawable/block_background">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="+"
-                    android:textSize="24sp"
-                    android:textColor="#CCCCCC"
-                    android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- 역 정보 블록 2 -->
+            <!-- 최근 경로 블록 2 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="120dp"
@@ -131,7 +76,6 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp" />
 
         <GridLayout
