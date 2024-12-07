@@ -2,11 +2,11 @@ package com.metromate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.res.ColorStateList;
-import android.graphics.Matrix;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private DrawerLayout drawerLayout;
+    private View toolbar;
+    private View bottomNavigationView;
+    private View searchBar;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,38 +52,21 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // 중간 상태로 시작
         bottomSheetBehavior.setHideable(true); // 완전히 숨길 수 있도록 설정
 
-        // Bottom Sheet 상태 변경 리스너 추가
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    // 완전히 확장된 상태
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    // 중간 상태
-                } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    // 완전히 숨겨진 상태
-                }
-            }
+        // UI 요소 초기화
+        toolbar = findViewById(R.id.toolbar);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        searchBar = findViewById(R.id.search_input);
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // 슬라이드 중
-            }
-        });
-
-        // ZoomableImageView 초기화 (추가 코드)
+        // ZoomableImageView 초기화
         ZoomableImageView subwayMapView = findViewById(R.id.subway_map_view);
         subwayMapView.post(() -> {
-            Matrix matrix = new Matrix();
+            subwayMapView.resetZoom(); // 초기 확대 비율을 0.3배로 설정
+        });
 
-            // 화면 크기에 맞게 확대 비율 계산
-            float scale = Math.max(
-                    (float) subwayMapView.getWidth() / subwayMapView.getDrawable().getIntrinsicWidth(),
-                    (float) subwayMapView.getHeight() / subwayMapView.getDrawable().getIntrinsicHeight()
-            );
-
-            matrix.postScale(scale, scale, 0, 0);
-            subwayMapView.setImageMatrix(matrix);
+        // 🟢 맵 터치 리스너 등록
+        subwayMapView.setOnClickListener(v -> {
+            toggleUIVisibility(true); // UI 보이기
+            handler.postDelayed(() -> toggleUIVisibility(false), 3000); // 3초 후 다시 숨김
         });
 
         // 드로어 메뉴 초기화
@@ -95,14 +82,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 검색창 클릭 이벤트 추가
-        EditText searchInput = findViewById(R.id.search_input); // 검색창
-
-        // 검색창 클릭 시 키보드가 뜨지 않도록 설정
+        EditText searchInput = findViewById(R.id.search_input);
         searchInput.setFocusable(false);
         searchInput.setFocusableInTouchMode(false);
-
         searchInput.setOnClickListener(v -> {
-            // 검색 화면으로 이동
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
         });
@@ -110,43 +93,35 @@ public class MainActivity extends AppCompatActivity {
         // "빠른 길찾기" 버튼 클릭 이벤트 추가
         View findPathButton = findViewById(R.id.find_path_button);
         findPathButton.setOnClickListener(v -> {
-            // QuickPathActivity로 이동
             Intent intent = new Intent(MainActivity.this, QuickPathActivity.class);
             startActivity(intent);
         });
 
-        // BottomNavigationView 초기화
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Active Indicator 색상 변경
-        int customPurpleColor = ContextCompat.getColor(this, R.color.indicatorColor); // 원하는 색상
+        int customPurpleColor = ContextCompat.getColor(this, R.color.indicatorColor);
         bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(customPurpleColor));
 
-
-        // Default 화면으로 HomeFragment 설정
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }
 
-        // BottomNavigationView 버튼 클릭 리스너
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
             if (item.getItemId() == R.id.nav_home) {
-                selectedFragment = new HomeFragment(); // HomeFragment 로드
+                selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.nav_fare) {
-                selectedFragment = new FareFragment(); // FareFragment 로드
+                selectedFragment = new FareFragment();
             } else if (item.getItemId() == R.id.nav_timetable) {
-                selectedFragment = new TimetableFragment(); // TimetableFragment 로드
+                selectedFragment = new TimetableFragment();
             } else if (item.getItemId() == R.id.nav_bookmark) {
-                selectedFragment = new BookmarksFragment(); // BookmarksFragment 로드
+                selectedFragment = new BookmarksFragment();
             }
 
             if (selectedFragment != null) {
-                // 숨겨진 상태라면 중간 단계로 복귀
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
-                // Fragment 로드
                 loadFragment(selectedFragment);
                 return true;
             }
@@ -154,11 +129,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Fragment 로드 메서드
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.bottom_sheet_content, fragment) // `R.id.bottom_sheet_content`가 FragmentContainerView ID여야 함
+                .replace(R.id.bottom_sheet_content, fragment)
                 .commit();
+    }
+
+    // 🟢 UI 숨기기 / 보이기 기능
+    private void toggleUIVisibility(boolean visible) {
+        int visibility = visible ? View.VISIBLE : View.GONE;
+        toolbar.setVisibility(visibility);
+        bottomNavigationView.setVisibility(visibility);
+        searchBar.setVisibility(visibility);
     }
 }
