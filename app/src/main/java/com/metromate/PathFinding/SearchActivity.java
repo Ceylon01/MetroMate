@@ -1,21 +1,29 @@
 package com.metromate.PathFinding;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.metromate.R;
+import com.metromate.models.Station;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,125 +32,238 @@ public class SearchActivity extends AppCompatActivity {
     private AutoCompleteTextView searchInput;
     private ListView recentSearchesListView;
     private ArrayAdapter<String> recentSearchesAdapter;
+    private TextView currentStationView, previousStationView, nextStationView;
+    private Button startStationButton, transferStationButton, endStationButton;
 
-    private List<String> allStationNames; // 모든 역 이름
-    private List<String> recentSearches;  // 최근 검색어 목록
+    private Map<String, List<Station>> stationMap; // 역 이름 -> 여러 호선 정보
+    private Map<Integer, Station> stationByIdMap; // id -> Station 객체
+    private ArrayList<String> recentSearches;
+    private Station selectedStation; // 현재 선택된 역
+
+    private SharedPreferences sharedPreferences;
+    private static final String RECENT_SEARCHES_KEY = "recent_searches";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        // 검색창 및 리스트 초기화
+        // UI 요소 초기화
         searchInput = findViewById(R.id.search_input);
         recentSearchesListView = findViewById(R.id.recent_searches_list);
+        currentStationView = findViewById(R.id.current_station_highlight);
+        previousStationView = findViewById(R.id.previous_station);
+        nextStationView = findViewById(R.id.next_station);
+        startStationButton = findViewById(R.id.start_station_button);
+        transferStationButton = findViewById(R.id.transfer_station_button);
+        endStationButton = findViewById(R.id.end_station_button);
+
+        sharedPreferences = getSharedPreferences("MetroMatePrefs", Context.MODE_PRIVATE);
 
         // 역 데이터 로드
-        allStationNames = loadStationNamesFromJSON();
-        if (allStationNames == null) {
-            allStationNames = new ArrayList<>(); // 데이터 로드 실패 시 빈 리스트로 초기화
+        stationMap = loadStationDataFromJSON();
+        if (stationMap.isEmpty()) {
+            Toast.makeText(this, "역 데이터를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // 최근 검색어 목록 초기화
-        recentSearches = new ArrayList<>();
+        // 자동완성 목록 생성: "명지대 (2호선)"처럼 표시
+        List<String> autoCompleteList = new ArrayList<>();
+        for (Map.Entry<String, List<Station>> entry : stationMap.entrySet()) {
+            for (Station station : entry.getValue()) {
+                autoCompleteList.add(station.getName() + " (" + station.getLine() + "호선)");
+            }
+        }
 
-        // 최근 검색 리스트 어댑터 설정
+        // 최근 검색 기록 불러오기
+        recentSearches = loadRecentSearches();
         recentSearchesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentSearches);
         recentSearchesListView.setAdapter(recentSearchesAdapter);
 
-        // 검색 입력창에서 실시간으로 역 이름을 필터링하는 어댑터 설정
-        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<>());
+        // 검색창 자동완성 어댑터 설정
+        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         searchInput.setAdapter(autoCompleteAdapter);
 
-        // 입력 텍스트 변경 이벤트 (실시간 자동완성)
-        searchInput.addTextChangedListener(new android.text.TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+        // 초기 상태 설정
+        selectedStation = null; // 기본 선택 없음
+        if (!stationMap.isEmpty()) {
+            String firstStationName = stationMap.keySet().iterator().next();
+            selectedStation = stationMap.get(firstStationName).get(0); // 첫 번째 역과 호선
+            updateSearchResult(selectedStation);
+        }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                // 사용자가 입력한 텍스트를 기준으로 역 이름을 필터링
-                String query = charSequence.toString().toLowerCase();
-                List<String> filteredStations = new ArrayList<>();
-
-                for (String station : allStationNames) {
-                    if (station.toLowerCase().contains(query)) {
-                        filteredStations.add(station);
-                    }
-                }
-
-                // 필터링된 결과로 AutoCompleteTextView의 어댑터 갱신
-                autoCompleteAdapter.clear();
-                autoCompleteAdapter.addAll(filteredStations);
-                autoCompleteAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable editable) {}
+        // 검색창 항목 클릭 이벤트
+        searchInput.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            String[] parts = selectedItem.split(" \\(");
+            String stationName = parts[0];
+            String line = parts[1].replace("호선)", "");
+            selectedStation = getStationByNameAndLine(stationName, line);
+            handleSearch(selectedStation);
         });
 
         // 최근 검색 항목 클릭 이벤트
         recentSearchesListView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedStation = (String) parent.getItemAtPosition(position);
-            searchInput.setText(selectedStation);  // 선택된 역 이름을 입력창에 반영
-            searchForStation(selectedStation);    // 역 검색 수행
+            String recentItem = recentSearches.get(position);
+            String[] parts = recentItem.split(" \\(");
+            String stationName = parts[0];
+            String line = parts[1].replace("호선)", "");
+            selectedStation = getStationByNameAndLine(stationName, line);
+            handleSearch(selectedStation);
         });
 
-        // AutoCompleteTextView의 자동 완성 항목 클릭 이벤트
-        searchInput.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedStation = (String) parent.getItemAtPosition(position);
-            searchForStation(selectedStation);    // 선택된 역 이름으로 검색
+        // 이전 역 클릭 이벤트
+        previousStationView.setOnClickListener(v -> {
+            if (selectedStation != null && selectedStation.getPrevious() != null) {
+                String previousStationName = getStationNameById(Integer.parseInt(selectedStation.getPrevious()));
+                selectedStation = getStationByNameAndLine(previousStationName, selectedStation.getLine());
+                handleSearch(selectedStation);
+            } else {
+                Toast.makeText(this, "이전 역이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 다음 역 클릭 이벤트
+        nextStationView.setOnClickListener(v -> {
+            if (selectedStation != null && selectedStation.getNext() != null) {
+                String nextStationName = getStationNameById(Integer.parseInt(selectedStation.getNext()));
+                selectedStation = getStationByNameAndLine(nextStationName, selectedStation.getLine());
+                handleSearch(selectedStation);
+            } else {
+                Toast.makeText(this, "다음 역이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 출발역 설정
+        startStationButton.setOnClickListener(v -> {
+            if (selectedStation != null) {
+                navigateToQuickPathActivity(selectedStation.getName(), selectedStation.getLine(), null, null, null, null);
+            } else {
+                Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 경유역 설정
+        transferStationButton.setOnClickListener(v -> {
+            if (selectedStation != null) {
+                navigateToQuickPathActivity(null, null, selectedStation.getName(), selectedStation.getLine(), null, null);
+            } else {
+                Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 도착역 설정
+        endStationButton.setOnClickListener(v -> {
+            if (selectedStation != null) {
+                navigateToQuickPathActivity(null, null, null, null, selectedStation.getName(), selectedStation.getLine());
+            } else {
+                Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
-    // 역 검색 함수
-    private void searchForStation(String stationName) {
-        // 예시: 역 검색 결과 처리
-        android.widget.Toast.makeText(this, "Searching for: " + stationName, android.widget.Toast.LENGTH_SHORT).show();
-
-        // 최근 검색어 목록에 추가 (중복 방지)
-        if (!recentSearches.contains(stationName)) {
-            recentSearches.add(0, stationName);  // 최근 검색어 맨 앞에 추가
-            recentSearchesAdapter.notifyDataSetChanged();  // 리스트 갱신
+    private void handleSearch(Station station) {
+        if (station != null) {
+            selectedStation = station;
+            String displayName = station.getName() + " (" + station.getLine() + "호선)";
+            if (!recentSearches.contains(displayName)) {
+                recentSearches.add(0, displayName);
+                saveRecentSearches();
+                recentSearchesAdapter.notifyDataSetChanged();
+            }
+            updateSearchResult(station);
         }
     }
 
-    // JSON에서 역 이름 로드 함수
-    private List<String> loadStationNamesFromJSON() {
-        List<String> stationNames = new ArrayList<>();
+    private void updateSearchResult(Station station) {
+        String previousStationName = getStationNameById(Integer.parseInt(station.getPrevious()));
+        String nextStationName = getStationNameById(Integer.parseInt(station.getNext()));
 
+        currentStationView.setText(station.getName() + " (" + station.getLine() + "호선)");
+        previousStationView.setText(previousStationName != null ? previousStationName + " ◀" : "◀ 종착");
+        nextStationView.setText(nextStationName != null ? "▶ " + nextStationName : "종착 ▶");
+    }
+
+    private String getStationNameById(int id) {
+        Station station = stationByIdMap.get(id);
+        return station != null ? station.getName() : null;
+    }
+
+    private Station getStationByNameAndLine(String name, String line) {
+        if (stationMap.containsKey(name)) {
+            for (Station station : stationMap.get(name)) {
+                if (station.getLine().equals(line)) {
+                    return station;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Map<String, List<Station>> loadStationDataFromJSON() {
+        Map<String, List<Station>> stationMap = new HashMap<>();
+        stationByIdMap = new HashMap<>();
         try {
-            // assets/data/subway_stations.json 파일 읽기
-            InputStream is = getAssets().open("data/subway_stations.json"); // 파일 경로 수정
+            InputStream is = getAssets().open("data/subway_stations.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             String json = new String(buffer, StandardCharsets.UTF_8);
 
-            // JSON 파싱
             Type type = new TypeToken<Map<String, List<Map<String, String>>>>() {}.getType();
             Map<String, List<Map<String, String>>> data = new Gson().fromJson(json, type);
 
-            // "stations" 키의 값에서 역 이름 가져오기
             if (data != null && data.containsKey("stations")) {
-                for (Map<String, String> station : data.get("stations")) {
-                    stationNames.add(station.get("name"));
+                for (Map<String, String> stationData : data.get("stations")) {
+                    int id = Integer.parseInt(stationData.get("id"));
+                    String name = stationData.get("name");
+                    String line = stationData.get("line");
+                    String previous = stationData.get("previous");
+                    String next = stationData.get("next");
+
+                    Station station = new Station(id, name, line, previous, next);
+                    stationMap.putIfAbsent(name, new ArrayList<>());
+                    stationMap.get(name).add(station);
+
+                    // id로 Station 저장
+                    stationByIdMap.put(id, station);
                 }
             }
-            // 데이터 로드 확인을 위해 로그 출력
-            android.util.Log.d("LoadStationData", "Total Stations Loaded: " + stationNames.size());
-            if (!stationNames.isEmpty()) {
-                android.util.Log.d("LoadStationData", "First Station: " + stationNames.get(0));
-            } else {
-                android.util.Log.d("LoadStationData", "No stations found in JSON file.");
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
-            android.util.Log.e("LoadStationData", "Failed to load JSON file: " + e.getMessage());
         }
+        return stationMap;
+    }
 
-        return stationNames;
+    private ArrayList<String> loadRecentSearches() {
+        String savedData = sharedPreferences.getString(RECENT_SEARCHES_KEY, "");
+        ArrayList<String> searches = new ArrayList<>();
+        if (!savedData.isEmpty()) {
+            String[] items = savedData.split(",");
+            for (String item : items) {
+                searches.add(item.trim());
+            }
+        }
+        return searches;
+    }
+
+    private void saveRecentSearches() {
+        StringBuilder data = new StringBuilder();
+        for (String search : recentSearches) {
+            data.append(search).append(",");
+        }
+        sharedPreferences.edit().putString(RECENT_SEARCHES_KEY, data.toString()).apply();
+    }
+
+    private void navigateToQuickPathActivity(String startStation, String startLine, String transferStation, String transferLine, String endStation, String endLine) {
+        Intent intent = new Intent(this, QuickPathActivity.class);
+        if (startStation != null) intent.putExtra("startStation", startStation);
+        if (startLine != null) intent.putExtra("startLine", startLine);
+        if (transferStation != null) intent.putExtra("transferStation", transferStation);
+        if (transferLine != null) intent.putExtra("transferLine", transferLine);
+        if (endStation != null) intent.putExtra("endStation", endStation);
+        if (endLine != null) intent.putExtra("endLine", endLine);
+        startActivity(intent);
     }
 }

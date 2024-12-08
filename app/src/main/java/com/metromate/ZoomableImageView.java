@@ -6,24 +6,18 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class ZoomableImageView extends AppCompatImageView {
+
     private final Matrix matrix = new Matrix();
     private final float[] matrixValues = new float[9];
 
-    // States
-    private static final int NONE = 0;
-    private static final int DRAG = 1;
-    private static final int ZOOM = 2;
-    private int mode = NONE;
+    private float minZoom = 0.3f;
+    private float maxZoom = 2.0f;
 
-    private ScaleGestureDetector scaleDetector;
-
-    // Dragging
-    private final PointF last = new PointF();
-    private float dy;
+    private PointF lastTouch = new PointF();
+    private ScaleGestureDetector scaleGestureDetector;
 
     public ZoomableImageView(Context context) {
         super(context);
@@ -36,71 +30,43 @@ public class ZoomableImageView extends AppCompatImageView {
     }
 
     private void init(Context context) {
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
         setScaleType(ScaleType.MATRIX);
+        setImageMatrix(matrix);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        scaleDetector.onTouchEvent(event);
-
-        PointF current = new PointF(event.getX(), event.getY());
-
-        switch (event.getAction()) {
+        scaleGestureDetector.onTouchEvent(event);
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                last.set(current);
-                mode = DRAG;
+                lastTouch.set(event.getX(), event.getY());
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if (mode == DRAG) {
-                    float dx = current.x - last.x;
-                    dy = current.y - last.y;
-
-                    // 현재 드래그 위치 계산
-                    matrix.postTranslate(dx, dy);
-                    setImageMatrix(matrix);
-                    last.set(current.x, current.y);
-                }
-                break;
-
-            case MotionEvent.ACTION_POINTER_DOWN:
-                mode = ZOOM;
-                break;
-
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP:
-                mode = NONE;
+                float dx = event.getX() - lastTouch.x;
+                float dy = event.getY() - lastTouch.y;
+                matrix.postTranslate(dx, dy);
+                setImageMatrix(matrix);
+                lastTouch.set(event.getX(), event.getY());
                 break;
         }
-
         return true;
+    }
+
+    public void resetZoom() {
+        matrix.reset();
+        matrix.postScale(0.3f, 0.3f);
+        setImageMatrix(matrix);
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             float scaleFactor = detector.getScaleFactor();
-
-            // 현재 스케일 값을 얻기 위해 Matrix 값 계산
-            matrix.getValues(matrixValues);
-            float currentScale = matrixValues[Matrix.MSCALE_X];
-
-            // 줌 범위를 제한
-            // Zooming
-            // 최소 줌 비율
-            float minScale = 1f;
-            // 최대 줌 비율
-            float maxScale = 5f;
-            if ((scaleFactor > 1 && currentScale * scaleFactor <= maxScale) || // 확대 조건
-                    (scaleFactor < 1 && currentScale * scaleFactor >= minScale)) { // 축소 조건
-                matrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
-            }
-
-            // Matrix 적용
+            matrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
             setImageMatrix(matrix);
             return true;
         }
-
     }
 }

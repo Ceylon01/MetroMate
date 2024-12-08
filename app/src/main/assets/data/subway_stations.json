@@ -1,309 +1,72 @@
 {
   "stations": [
-    {
-      "id": 101,
-      "name": "솔빛",
-      "line": "1"
-    },
-    {
-      "id": 102,
-      "name": "달새",
-      "line": "1"
-    },
-    {
-      "id": 103,
-      "name": "청목",
-      "line": "1"
-    },
-    {
-      "id": 104,
-      "name": "산솔",
-      "line": "1"
-    },
-    {
-      "id": 105,
-      "name": "바람",
-      "line": "1"
-    },
-    {
-      "id": 106,
-      "name": "가온",
-      "line": "1"
-    },
-    {
-      "id": 107,
-      "name": "은빛",
-      "line": "1"
-    },
-    {
-      "id": 108,
-      "name": "물안",
-      "line": "1"
-    },
-    {
-      "id": 109,
-      "name": "하늘",
-      "line": "1"
-    },
-    {
-      "id": 110,
-      "name": "푸름",
-      "line": "1"
-    },
-    {
-      "id": 111,
-      "name": "해솔",
-      "line": "1"
-    },
-    {
-      "id": 112,
-      "name": "초림",
-      "line": "1"
-    },
-    {
-      "id": 113,
-      "name": "새봄",
-      "line": "1"
-    },
-    {
-      "id": 114,
-      "name": "구름",
-      "line": "1"
-    },
-    {
-      "id": 115,
-      "name": "한빛",
-      "line": "1"
-    },
-    {
-      "id": 116,
-      "name": "담소",
-      "line": "1"
-    },
-    {
-      "id": 117,
-      "name": "희망",
-      "line": "1"
-    },
-    {
-      "id": 118,
-      "name": "아름",
-      "line": "1"
-    },
-    {
-      "id": 119,
-      "name": "진솔",
-      "line": "1"
-    },
-    {
-      "id": 120,
-      "name": "온기",
-      "line": "1"
-    },
-    {
-      "id": 121,
-      "name": "서정",
-      "line": "1"
-    },
-    {
-      "id": 122,
-      "name": "다온",
-      "line": "1"
-    },
-    {
-      "id": 123,
-      "name": "기쁨",
-      "line": "1"
-    },
-    {
-      "id": 201,
-      "name": "해찬",
-      "line": "2"
-    },
-    {
-      "id": 202,
-      "name": "빛가온",
-      "line": "2"
-    },
-    {
-      "id": 203,
-      "name": "소담",
-      "line": "2"
-    },
-    {
-      "id": 204,
-      "name": "금천",
-      "line": "2"
-    },
-    {
-      "id": 205,
-      "name": "청운",
-      "line": "2"
-    },
-    {
-      "id": 206,
-      "name": "명도",
-      "line": "2"
-    },
-    {
-      "id": 207,
-      "name": "백운",
-      "line": "2"
-    },
-    {
-      "id": 208,
-      "name": "서화",
-      "line": "2"
-    },
-    {
-      "id": 209,
-      "name": "명지대",
-      "line": "2"
-    },
-    {
-      "id": 210,
-      "name": "송월",
-      "line": "2"
-    },
-    {
-      "id": 211,
-      "name": "별빛",
-      "line": "2"
-    },
-    {
-      "id": 212,
-      "name": "달빛",
-      "line": "2"
-    },
-    {
-      "id": 213,
-      "name": "온새",
-      "line": "2"
-    },
-    {
-      "id": 214,
-      "name": "비운",
-      "line": "2"
-    },
-    {
-      "id": 215,
-      "name": "가현",
-      "line": "2"
-    },
-    {
-      "id": 216,
-      "name": "모나",
-      "line": "2"
-    },
-    {
-      "id": 217,
-      "name": "우림",
-      "line": "2"
-    },
-    {
-      "id": 301,
-      "name": "라온",
-      "line": "3"
-    },
-    {
-      "id": 302,
-      "name": "시온",
-      "line": "3"
-    },
-    {
-      "id": 303,
-      "name": "파랑",
-      "line": "3"
-    },
-    {
-      "id": 304,
-      "name": "오름",
-      "line": "3"
-    },
-    {
-      "id": 305,
-      "name": "빛담",
-      "line": "3"
-    },
-    {
-      "id": 306,
-      "name": "휘림",
-      "line": "3"
-    },
-    {
-      "id": 307,
-      "name": "온빛",
-      "line": "3"
-    },
-    {
-      "id": 308,
-      "name": "다솜",
-      "line": "3"
-    },
-    {
-      "id": 401,
-      "name": "성화",
-      "line": "4"
-    },
-    {
-      "id": 402,
-      "name": "한결",
-      "line": "4"
-    },
-    {
-      "id": 403,
-      "name": "가람",
-      "line": "4"
-    },
-    {
-      "id": 404,
-      "name": "마루",
-      "line": "4"
-    },
-    {
-      "id": 405,
-      "name": "도원",
-      "line": "4"
-    },
-    {
-      "id": 406,
-      "name": "누리",
-      "line": "4"
-    },
-    {
-      "id": 407,
-      "name": "하온",
-      "line": "4"
-    },
-    {
-      "id": 408,
-      "name": "초은",
-      "line": "4"
-    },
-    {
-      "id": 409,
-      "name": "다빛",
-      "line": "4"
-    },
-    {
-      "id": 410,
-      "name": "서담",
-      "line": "4"
-    },
-    {
-      "id": 411,
-      "name": "소망",
-      "line": "4"
-    },
-    {
-      "id": 412,
-      "name": "휘경",
-      "line": "4"
-    },
-    {
-      "id": 413,
-      "name": "나래",
-      "line": "4"
-    }
+    { "id": 101, "name": "솔빛", "line": "1", "previous": 124, "next": 102 },
+    { "id": 102, "name": "달새", "line": "1", "previous": 101, "next": 103 },
+    { "id": 103, "name": "청목", "line": "1", "previous": 102, "next": 104 },
+    { "id": 104, "name": "산솔", "line": "1", "previous": 103, "next": 105 },
+    { "id": 105, "name": "바람", "line": "1", "previous": 104, "next": 106 },
+    { "id": 106, "name": "가온", "line": "1", "previous": 105, "next": 107 },
+    { "id": 107, "name": "은빛", "line": "1", "previous": 106, "next": 108 },
+    { "id": 108, "name": "물안", "line": "1", "previous": 107, "next": 109 },
+    { "id": 109, "name": "하늘", "line": "1", "previous": 108, "next": 110 },
+    { "id": 110, "name": "푸름", "line": "1", "previous": 109, "next": 111 },
+    { "id": 111, "name": "해솔", "line": "1", "previous": 110, "next": 112 },
+    { "id": 112, "name": "초림", "line": "1", "previous": 111, "next": 113 },
+    { "id": 113, "name": "새봄", "line": "1", "previous": 112, "next": 114 },
+    { "id": 114, "name": "구름", "line": "1", "previous": 113, "next": 115 },
+    { "id": 115, "name": "한빛", "line": "1", "previous": 114, "next": 116 },
+    { "id": 116, "name": "담소", "line": "1", "previous": 115, "next": 117 },
+    { "id": 117, "name": "희망", "line": "1", "previous": 116, "next": 118 },
+    { "id": 118, "name": "아름", "line": "1", "previous": 117, "next": 119 },
+    { "id": 119, "name": "진솔", "line": "1", "previous": 118, "next": 120 },
+    { "id": 120, "name": "온기", "line": "1", "previous": 119, "next": 121 },
+    { "id": 121, "name": "서정", "line": "1", "previous": 120, "next": 122 },
+    { "id": 122, "name": "다온", "line": "1", "previous": 121, "next": 123 },
+    { "id": 123, "name": "명도", "line": "1", "previous": 122, "next": 124 },
+    { "id": 124, "name": "기쁨", "line": "1", "previous": 123, "next": 101 },
+    { "id": 201, "name": "해찬", "line": "2", "previous": null, "next": 202 },
+    { "id": 202, "name": "빛가온", "line": "2", "previous": 201, "next": 203 },
+    { "id": 203, "name": "소담", "line": "2", "previous": 202, "next": 204 },
+    { "id": 204, "name": "금천", "line": "2", "previous": 203, "next": 205 },
+    { "id": 205, "name": "청운", "line": "2", "previous": 204, "next": 206 },
+    { "id": 206, "name": "명도", "line": "2", "previous": 205, "next": 207 },
+    { "id": 207, "name": "백운", "line": "2", "previous": 206, "next": 208 },
+    { "id": 208, "name": "서화", "line": "2", "previous": 207, "next": 209 },
+    { "id": 209, "name": "명지대", "line": "2", "previous": 208, "next": 210 },
+    { "id": 210, "name": "송월", "line": "2", "previous": 209, "next": 211 },
+    { "id": 211, "name": "별빛", "line": "2", "previous": 210, "next": 212 },
+    { "id": 212, "name": "다빛", "line": "2", "previous": 211, "next": 213 },
+    { "id": 213, "name": "해솔", "line": "2", "previous": 212, "next": 214 },
+    { "id": 214, "name": "달빛", "line": "2", "previous": 213, "next": 215 },
+    { "id": 215, "name": "온새", "line": "2", "previous": 214, "next": 216 },
+    { "id": 216, "name": "비운", "line": "2", "previous": 215, "next": 217 },
+    { "id": 217, "name": "가현", "line": "2", "previous": 216, "next": 218 },
+    { "id": 218, "name": "모나", "line": "2", "previous": 217, "next": 219 },
+    { "id": 219, "name": "우림", "line": "2", "previous": 218, "next": null },
+    { "id": 301, "name": "라온", "line": "3", "previous": null, "next": 302 },
+    { "id": 302, "name": "시온", "line": "3", "previous": 301, "next": 303 },
+    { "id": 303, "name": "파랑", "line": "3", "previous": 302, "next": 304 },
+    { "id": 304, "name": "오름", "line": "3", "previous": 303, "next": 305 },
+    { "id": 305, "name": "산솔", "line": "3", "previous": 304, "next": 306 },
+    { "id": 306, "name": "명지대", "line": "3", "previous": 305, "next": 307 },
+    { "id": 307, "name": "아름", "line": "3", "previous": 306, "next": 308 },
+    { "id": 308, "name": "빛담", "line": "3", "previous": 307, "next": 309 },
+    { "id": 309, "name": "도원", "line": "3", "previous": 308, "next": 310 },
+    { "id": 310, "name": "휘림", "line": "3", "previous": 309, "next": 311 },
+    { "id": 311, "name": "온빛", "line": "3", "previous": 310, "next": 312 },
+    { "id": 312, "name": "다솜", "line": "3", "previous": 311, "next": null },
+    { "id": 401, "name": "성화", "line": "4", "previous": null, "next": 402 },
+    { "id": 402, "name": "한결", "line": "4", "previous": 401, "next": 403 },
+    { "id": 403, "name": "가람", "line": "4", "previous": 402, "next": 404 },
+    { "id": 404, "name": "마루", "line": "4", "previous": 403, "next": 405 },
+    { "id": 405, "name": "도원", "line": "4", "previous": 404, "next": 406 },
+    { "id": 406, "name": "누리", "line": "4", "previous": 405, "next": 407 },
+    { "id": 407, "name": "하온", "line": "4", "previous": 406, "next": 408 },
+    { "id": 408, "name": "초은", "line": "4", "previous": 407, "next": 409 },
+    { "id": 409, "name": "구름", "line": "4", "previous": 408, "next": 410 },
+    { "id": 410, "name": "다빛", "line": "4", "previous": 409, "next": 411 },
+    { "id": 411, "name": "물안", "line": "4", "previous": 410, "next": 412 },
+    { "id": 412, "name": "서담", "line": "4", "previous": 411, "next": 413 },
+    { "id": 413, "name": "소망", "line": "4", "previous": 412, "next": null }
   ]
 }
