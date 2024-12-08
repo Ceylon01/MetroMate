@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- 경로 이름 -->
+    <TextView
+        android:id="@+id/routeNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="경로 이름"
+        android:textSize="18sp" />
+
+    <!-- 삭제 버튼 (ImageView로 변경) -->
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:src="@drawable/ic_delete"
+    android:contentDescription="삭제"
+    android:scaleType="centerInside" />
+</LinearLayout>

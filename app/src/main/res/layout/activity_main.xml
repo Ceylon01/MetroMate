@@ -81,11 +81,12 @@
             app:menu="@menu/bottom_nav_menu"
             app:itemIconSize="35dp"
             app:itemHorizontalTranslationEnabled="false"
-            app:itemIconTint="@color/textColorSecondary"
+            app:itemIconTint="#002ABC"
             app:itemTextColor="@color/textColorSecondary"
             app:itemRippleColor="@color/indicatorColor"
             android:background="@drawable/background_nav_bar"
             tools:ignore="VisualLintBottomNav" />
+
 
         <RelativeLayout
             android:layout_width="380dp"

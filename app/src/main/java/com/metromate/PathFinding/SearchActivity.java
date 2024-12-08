@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.metromate.R;
+import com.metromate.models.FavoriteStation;
 import com.metromate.models.Station;
+import com.metromate.utils.FavoriteManager;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +36,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView recentSearchesListView;
     private ArrayAdapter<String> recentSearchesAdapter;
     private TextView currentStationView, previousStationView, nextStationView;
-    private Button startStationButton, transferStationButton, endStationButton;
+    private Button startStationButton, transferStationButton, endStationButton, favoriteButton;
 
     private Map<String, List<Station>> stationMap; // 역 이름 -> 여러 호선 정보
     private Map<Integer, Station> stationByIdMap; // id -> Station 객체
@@ -42,6 +45,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private static final String RECENT_SEARCHES_KEY = "recent_searches";
+
+    private FavoriteManager favoriteManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,10 @@ public class SearchActivity extends AppCompatActivity {
         startStationButton = findViewById(R.id.start_station_button);
         transferStationButton = findViewById(R.id.transfer_station_button);
         endStationButton = findViewById(R.id.end_station_button);
+        favoriteButton = findViewById(R.id.favorite_button); // 즐겨찾기 버튼
 
         sharedPreferences = getSharedPreferences("MetroMatePrefs", Context.MODE_PRIVATE);
+        favoriteManager = new FavoriteManager(this);
 
         // 역 데이터 로드
         stationMap = loadStationDataFromJSON();
@@ -160,6 +167,29 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // 즐겨찾기 버튼 클릭 이벤트
+        favoriteButton.setOnClickListener(v -> {
+            if (selectedStation != null) {
+                FavoriteStation favoriteStation = new FavoriteStation(
+                        selectedStation.getId(),
+                        selectedStation.getName(),
+                        selectedStation.getLine(),
+                        selectedStation.getSubwayType(),
+                        selectedStation.getSubwayStatus()
+                );
+
+                if (favoriteManager.getFavoriteStations().contains(favoriteStation)) {
+                    favoriteManager.removeFavoriteStation(favoriteStation);
+                    Toast.makeText(this, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    favoriteManager.addFavoriteStation(favoriteStation);
+                    Toast.makeText(this, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void handleSearch(Station station) {
@@ -221,8 +251,10 @@ public class SearchActivity extends AppCompatActivity {
                     String line = stationData.get("line");
                     String previous = stationData.get("previous");
                     String next = stationData.get("next");
+                    String subwayType = stationData.get("subwayType");  // 추가된 subwayType
+                    String subwayStatus = stationData.get("subwayStatus"); // 추가된 subwayStatus
 
-                    Station station = new Station(id, name, line, previous, next);
+                    Station station = new Station(id, name, line, previous, next, subwayType, subwayStatus);
                     stationMap.putIfAbsent(name, new ArrayList<>());
                     stationMap.get(name).add(station);
 

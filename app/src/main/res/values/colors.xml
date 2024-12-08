@@ -14,4 +14,7 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
+
+    <color name="icon_color">#002ABC</color> <!-- 원하는 색상 코드로 변경 -->
+
 </resources>

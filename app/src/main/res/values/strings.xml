@@ -44,5 +44,11 @@
     <string name="empty_favorites_message">즐겨찾기가 비어 있습니다.</string>
     <string name="empty_favorites_sub_message">즐겨찾기를 추가하여 빠르게 액세스하세요.</string>
     <string name="settings_favorites">즐겨찾기 설정</string>
+    <string-array name="line_options">
+        <item>1호선</item>
+        <item>2호선</item>
+        <item>3호선</item>
+        <item>4호선</item>
+    </string-array>
 
 </resources>

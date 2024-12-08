@@ -1,6 +1,8 @@
 package com.metromate.PathFinding;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -8,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.metromate.R;
 import com.metromate.models.Edge;
+import com.metromate.models.FavoriteRoute;
 import com.metromate.models.RouteCalculator;
 import com.metromate.models.Station;
 import com.metromate.models.SubwayData;
+import com.metromate.utils.FavoriteManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private List<Station> stations; // 모든 역 데이터
     private List<Edge> edges; // 모든 경로 데이터
+    private FavoriteManager favoriteManager; // 즐겨찾기 매니저
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,18 @@ public class SearchResultActivity extends AppCompatActivity {
         travelDetailsView = findViewById(R.id.travel_details);
         travelCostView = findViewById(R.id.travel_cost);
         travelTimeView = findViewById(R.id.travel_time);
+
+        // 즐겨찾기 매니저 초기화
+        favoriteManager = new FavoriteManager(this);
+
+        // 즐겨찾기 추가 버튼
+        Button bookmarkButton = findViewById(R.id.bookmark_button);  // 기존 bookmark_button으로 수정
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRouteToFavorites();  // 즐겨찾기 추가
+            }
+        });
 
         // 데이터 로드
         SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
@@ -144,5 +161,28 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    // 즐겨찾기 추가
+    private void addRouteToFavorites() {
+        String departureStation = departureStationView.getText().toString();
+        String waypointStation = waypointStationView.getText().toString();
+        String arrivalStation = arrivalStationView.getText().toString();
+
+        List<String> routeStations = new ArrayList<>();
+        routeStations.add(departureStation);
+        if (!"경유 없음".equals(waypointStation)) {
+            routeStations.add(waypointStation);
+        }
+        routeStations.add(arrivalStation);
+
+        int totalTime = Integer.parseInt(travelTimeView.getText().toString().replace("분 소요", ""));
+        int totalFare = Integer.parseInt(travelCostView.getText().toString().replace("카드 ", "").replace("원", ""));
+        int totalStations = routeStations.size();
+
+        FavoriteRoute route = new FavoriteRoute(routeStations, totalTime, totalFare, totalStations);
+
+        favoriteManager.addFavoriteRoute(route);
+        Toast.makeText(this, "경로가 즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show();
     }
 }

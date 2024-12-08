@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RouteCalculator {
 
-    private static final int BASE_FARE = 1250; // 기본 요금
+    private static final int BASE_FARE = 1400; // 기본 요금
     private static final int EXTRA_FARE_DISTANCE = 100; // 추가 요금 기준 거리 (10km)
     private static final int EXTRA_FARE = 100; // 10km 초과 시 km당 추가 요금
 
