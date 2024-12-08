@@ -99,6 +99,13 @@ public class SearchActivity extends AppCompatActivity {
             updateSearchResult(selectedStation);
         }
 
+        // Intent에서 역 이름 받아오기
+        String stationNameFromIntent = getIntent().getStringExtra("stationName");
+        if (stationNameFromIntent != null) {
+            // 자동으로 해당 역을 검색하고 결과 처리
+            searchForStationByName(stationNameFromIntent);
+        }
+
         // 검색창 항목 클릭 이벤트
         searchInput.setOnItemClickListener((parent, view, position, id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
@@ -190,6 +197,20 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // 자동으로 역 검색 처리하는 메서드
+    private void searchForStationByName(String stationName) {
+        // 역을 자동으로 검색하고 해당 역 선택
+        for (Map.Entry<String, List<Station>> entry : stationMap.entrySet()) {
+            for (Station station : entry.getValue()) {
+                if (station.getName().equals(stationName)) {
+                    selectedStation = station;
+                    handleSearch(station); // 검색 결과 처리
+                    return;
+                }
+            }
+        }
     }
 
     private void handleSearch(Station station) {

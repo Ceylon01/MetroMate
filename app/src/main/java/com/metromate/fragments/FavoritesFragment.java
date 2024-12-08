@@ -14,7 +14,6 @@ import com.metromate.adapters.FavoritesAdapter;
 import com.metromate.models.FavoriteStation;
 import com.metromate.utils.FavoriteManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesFragment extends Fragment {
@@ -43,14 +42,12 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void updateFavoriteList(FavoriteManager favoriteManager, RecyclerView favoriteRecyclerView) {
-        List<Object> favoriteItems = new ArrayList<>();
-
-        // FavoriteStation과 FavoriteRoute을 모두 리스트에 추가
-        favoriteItems.addAll(favoriteManager.getFavoriteStations());
-        favoriteItems.addAll(favoriteManager.getFavoriteRoutes());
+        // 즐겨찾기 역 목록을 가져와서 RecyclerView에 표시
+        List<FavoriteStation> favoriteStations = favoriteManager.getFavoriteStations();
 
         // RecyclerView 어댑터 설정
-        favoritesAdapter = new FavoritesAdapter(favoriteItems, favoriteManager);
+        favoritesAdapter = new FavoritesAdapter(favoriteStations, favoriteManager, getContext());
+
         favoriteRecyclerView.setAdapter(favoritesAdapter);
     }
 }
