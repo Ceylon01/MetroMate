@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
-import com.metromate.fragments.BookmarksFragment;
+import com.metromate.fragments.FavoritesFragment;
 import com.metromate.fragments.FareFragment;
 import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new FareFragment();
             } else if (item.getItemId() == R.id.nav_timetable) {
                 selectedFragment = new TimetableFragment();
-            } else if (item.getItemId() == R.id.nav_bookmark) {
-                selectedFragment = new BookmarksFragment();
+            } else if (item.getItemId() == R.id.nav_favorites) {
+                selectedFragment = new FavoritesFragment();
             }
 
             if (selectedFragment != null) {
