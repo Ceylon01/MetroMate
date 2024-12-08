@@ -37,7 +37,7 @@
             android:text="연천"
             android:textColor="#2D4BA0"
             android:textSize="18sp"
-            android:background="@drawable/rounded_background" />
+            android:background="@drawable/background_rounded" />
 
         <!-- 오른쪽 버튼 (전곡) -->
         <TextView

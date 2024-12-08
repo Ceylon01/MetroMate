@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_privacy_policy"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/tv_privacy_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용약관"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 최종 업데이트 날짜 -->
+        <TextView
+            android:id="@+id/tv_last_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최종 업데이트: 2024.12.08"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 개인정보 처리방침 내용 -->
+        <TextView
+            android:id="@+id/tv_privacy_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:lineSpacingExtra="4dp"
+            android:text="1. 서비스 소개\n본 애플리케이션(&quot;앱&quot;)은 지하철 노선 검색, 경로 안내, 요금 계산 등의 서비스를 제공합니다. 앱을 이용함으로써 귀하는 본 이용약관에 동의하는 것으로 간주됩니다.\n\n2. 사용자 의무\n1) 사용자는 앱을 법적으로 허용된 용도로만 이용해야 합니다.\n2) 앱의 데이터를 무단 복제, 수정, 배포하거나 상업적 목적으로 사용할 수 없습니다.\n3) 다른 사용자의 개인정보를 침해하거나, 앱을 부적절한 목적으로 사용해서는 안 됩니다.\n\n3. 서비스 제공 및 변경\n회사는 사전 통보 없이 앱의 기능을 변경, 중단하거나 업데이트할 권리를 가집니다.\n\n4. 책임 제한\n회사는 서비스 사용으로 인해 발생하는 직접적, 간접적 손해에 대해 책임을 지지 않습니다.\n서비스 정보는 최신성을 유지하기 위해 노력하나, 실시간 정보의 정확성을 보장하지는 않습니다.\n\n5. 개인정보 보호\n앱의 개인정보 처리와 관련된 사항은 [개인정보 처리방침]에 따릅니다.\n\n6. 약관 변경\n회사는 이용약관을 언제든지 수정할 수 있으며, 수정된 약관은 앱 내 공지 후 효력을 가집니다.\n\n7. 문의사항\n이용약관과 관련된 질문은 [공지사항] 내 이메일로 문의하시기 바랍니다."
+            android:layout_marginBottom="24dp" />
+
+    </LinearLayout>
+</ScrollView>

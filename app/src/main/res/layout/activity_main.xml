@@ -84,7 +84,7 @@
             app:itemIconTint="@color/textColorSecondary"
             app:itemTextColor="@color/textColorSecondary"
             app:itemRippleColor="@color/indicatorColor"
-            android:background="@drawable/shadow_nav_bar"
+            android:background="@drawable/background_nav_bar"
             tools:ignore="VisualLintBottomNav" />
 
         <RelativeLayout

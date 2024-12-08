@@ -39,5 +39,10 @@
         <!-- FareActivity 등록 -->
         <activity android:name=".fare.FareActivity" android:exported="true" />
 
+
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".TermsOfServiceActivity" />
+        <activity android:name=".PrivacyPolicyActivity" />
+
     </application>
 </manifest>
