@@ -20,9 +20,9 @@ import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> {
 
-    private List<FavoriteStation> favoriteStations;  // 즐겨찾기 역만 관리
-    private FavoriteManager favoriteManager;
-    private Context context;
+    private final List<FavoriteStation> favoriteStations;  // 즐겨찾기 역만 관리
+    private final FavoriteManager favoriteManager;  // final로 선언
+    private final Context context;  // final로 선언
 
     public FavoritesAdapter(List<FavoriteStation> favoriteStations, FavoriteManager favoriteManager, Context context) {
         this.favoriteStations = favoriteStations;
@@ -33,7 +33,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @NonNull
     @Override
     public FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // 역만 관리하므로 item_favorite_station 레이아웃만 사용
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite_station, parent, false);
         return new FavoriteViewHolder(view);
     }
@@ -41,7 +40,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
         // 해당 역 정보를 가져옵니다.
-        FavoriteStation station = favoriteStations.get(position);
+        final FavoriteStation station = favoriteStations.get(position);
         holder.stationNameTextView.setText(station.getName());
 
         // 역 클릭 시 SearchActivity로 이동
@@ -53,9 +52,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
         // X 버튼 클릭 시 해당 역 삭제
         holder.deleteButton.setOnClickListener(v -> {
-            favoriteManager.removeFavoriteStation(station);  // FavoriteStation 객체 삭제
-            favoriteStations.remove(position);  // 리스트에서 삭제
-            notifyItemRemoved(position);  // RecyclerView 갱신
+            // FavoriteManager에서 역 삭제
+            favoriteManager.removeFavoriteStation(station);
+            // 리스트에서 역 제거
+            favoriteStations.remove(station);
+            // RecyclerView 갱신
+            notifyItemRemoved(position);
         });
     }
 
@@ -66,8 +68,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     // FavoriteViewHolder는 역을 위한 뷰 홀더
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
-        TextView stationNameTextView;  // 역 이름을 위한 TextView
-        ImageView deleteButton;        // 삭제 버튼 (ImageView로 변경)
+        TextView stationNameTextView;
+        ImageView deleteButton;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
