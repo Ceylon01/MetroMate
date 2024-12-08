@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="즐겨찾기"
+        android:backgroundTint="@color/mm_blue"
         android:layout_gravity="center" />
 
     <!-- 검색 결과 표시 영역 -->
@@ -69,7 +71,7 @@
                 android:gravity="center"
                 android:text="명지대"
                 android:textSize="18sp"
-                android:textColor="#FF5722"
+                android:textColor="@color/mm_blue"
                 android:textStyle="bold" />
 
             <!-- 다음 역 -->
@@ -100,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="출발역"
-            android:backgroundTint="#E0E0E0"
+            android:backgroundTint="#EFEFEF"
             android:textColor="@android:color/black"
             android:layout_marginEnd="8dp" />
 
@@ -111,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="경유역"
-            android:backgroundTint="#E0E0E0"
+            android:backgroundTint="#EFEFEF"
             android:textColor="@android:color/black"
             android:layout_marginEnd="8dp" />
 
@@ -122,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="도착역"
-            android:backgroundTint="#E0E0E0"
+            android:backgroundTint="#EFEFEF"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
