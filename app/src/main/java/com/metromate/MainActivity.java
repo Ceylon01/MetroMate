@@ -81,6 +81,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 드로어 메뉴 항목 클릭 리스너
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.menu_notice) {
+                startActivity(new Intent(MainActivity.this,NoticeActivity.class));
+            } else if (item.getItemId() == R.id.menu_terms_of_service) {
+                startActivity(new Intent(MainActivity.this, TermsOfServiceActivity.class));
+            } else if (item.getItemId() == R.id.menu_privacy_policy) {
+                startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+            }
+
+            drawerLayout.closeDrawers(); // 드로어 닫기
+            return true;
+        });
+
         // 검색창 클릭 이벤트 추가
         EditText searchInput = findViewById(R.id.search_input);
         searchInput.setFocusable(false);
