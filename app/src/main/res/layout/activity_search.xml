@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,6 +19,15 @@
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="16sp" />
+
+    <!-- 즐겨찾기 버튼 -->
+    <Button
+        android:id="@+id/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="즐겨찾기"
+        android:layout_gravity="center" />
 
     <!-- 검색 결과 표시 영역 -->
     <LinearLayout
