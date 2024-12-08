@@ -32,7 +32,7 @@
             <!-- 최근 경로 블록 1 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:layout_margin="8dp"
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="16dp"
@@ -42,16 +42,16 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="+"
-                    android:textSize="24sp"
-                    android:textColor="#CCCCCC"
+                    android:text="출발역: 역 1\n도착역: 역 2\n요금: 1,500원"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
                     android:gravity="center" />
             </androidx.cardview.widget.CardView>
 
             <!-- 최근 경로 블록 2 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:layout_margin="8dp"
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="16dp"
@@ -61,9 +61,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="+"
-                    android:textSize="24sp"
-                    android:textColor="#CCCCCC"
+                    android:text="출발역: 역 3\n도착역: 역 4\n요금: 2,000원"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
                     android:gravity="center" />
             </androidx.cardview.widget.CardView>
         </GridLayout>
@@ -81,7 +81,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4"
+            android:columnCount="3"
             android:layout_marginBottom="24dp">
 
             <!-- 최근 검색역 블록 1 -->
@@ -155,6 +155,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="역 4"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- 최근 검색역 블록 5 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:background="@drawable/block_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="역 5"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:gravity="center" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- 최근 검색역 블록 6 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:background="@drawable/block_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="역 6"
                     android:textSize="12sp"
                     android:textColor="#000000"
                     android:gravity="center" />
