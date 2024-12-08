@@ -3,7 +3,6 @@
     <string name="station_name">Station Name</string>
     <string name="hint_search_input">검색</string>
     <string name="search_button">검색</string>
-    <string name="home_title">홈</string>
     <string name="timetable_title">시간표</string>
     <string name="fare_title">요금 계산</string>
     <string name="fare_description">요금 계산 항목이 여기에 표시됩니다.</string>
@@ -43,7 +42,7 @@
     <string name="empty_state_image_desc">경로가 없습니다.</string>
     <string name="empty_favorites_message">즐겨찾기가 비어 있습니다.</string>
     <string name="empty_favorites_sub_message">즐겨찾기를 추가하여 빠르게 액세스하세요.</string>
-    <string name="settings_favorites">즐겨찾기 설정</string>
+    <string name="settings_favorites">즐겨찾기</string>
     <string-array name="line_options">
         <item>1호선</item>
         <item>2호선</item>

@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.res.ColorStateList;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,11 +18,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 import com.metromate.fragments.FavoritesFragment;
 import com.metromate.fragments.FareFragment;
-import com.metromate.fragments.HomeFragment;
 import com.metromate.fragments.TimetableFragment;
 import com.metromate.PathFinding.SearchActivity;
 import com.metromate.PathFinding.QuickPathActivity;
-import com.metromate.ZoomableImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -116,20 +113,18 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(customPurpleColor));
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(new FavoritesFragment());
         }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
-            if (item.getItemId() == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
+            if (item.getItemId() == R.id.nav_favorites) {
+                selectedFragment = new FavoritesFragment();
             } else if (item.getItemId() == R.id.nav_fare) {
                 selectedFragment = new FareFragment();
             } else if (item.getItemId() == R.id.nav_timetable) {
                 selectedFragment = new TimetableFragment();
-            } else if (item.getItemId() == R.id.nav_favorites) {
-                selectedFragment = new FavoritesFragment();
             }
 
             if (selectedFragment != null) {

@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_real"
-        android:title="@string/home_title" />
+        android:id="@+id/nav_favorites"
+        android:icon="@drawable/ic_star_border_real"
+        android:title="@string/settings_favorites" />
     <item
         android:id="@+id/nav_timetable"
         android:icon="@drawable/ic_timetable_real"
@@ -11,8 +11,4 @@
         android:id="@+id/nav_fare"
         android:icon="@drawable/ic_fare_real"
         android:title="@string/fare_title" />
-    <item
-        android:id="@+id/nav_favorites"
-        android:icon="@drawable/ic_star_border_real"
-        android:title="@string/settings_favorites" />
 </menu>
