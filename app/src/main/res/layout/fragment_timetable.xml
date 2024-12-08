@@ -1,23 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_marginTop="42dp" >
+    android:padding="30dp">
 
+    <!-- 시간표 제목 -->
     <TextView
         android:id="@+id/timetable_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/timetable_title"
+        android:text="시간표"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="34dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/timetable_recycler_view"
+    <!-- 호선 선택 Spinner -->
+    <Spinner
+        android:id="@+id/line_spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp" />
+        android:layout_height="wrap_content"
+        android:entries="@array/line_options" />
+
+    <!-- 시간표 리스트 -->
+    <LinearLayout
+        android:id="@+id/timetable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="16dp">
+    </LinearLayout>
 </LinearLayout>
