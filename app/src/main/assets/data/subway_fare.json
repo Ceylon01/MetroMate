@@ -1,4 +1,14 @@
 {
+  "base_fare": {
+    "adult": 1250,
+    "teenager": 720,
+    "child": 450
+  },
+  "distance_additional_fare": [
+    { "range": [0, 10], "fare": 0 },
+    { "range": [11, 50], "fare_per_km": 100 },
+    { "range": [51, 100], "fare_per_km": 150 }
+  ],
   "stations": [
     { "id": 101, "name": "솔빛", "line": "1" },
     { "id": 102, "name": "달새", "line": "1" },
@@ -107,6 +117,8 @@
     { "start": 122, "end": 121, "time": 300, "distance": 250 },
     { "start": 122, "end": 123, "time": 300, "distance": 200 },
     { "start": 123, "end": 122, "time": 300, "distance": 200 },
+    { "start": 123, "end": 101, "time": 300, "distance": 200 },
+    { "start": 101, "end": 123, "time": 300, "distance": 200 },
     { "start": 201, "end": 202, "time": 200, "distance": 500 },
     { "start": 202, "end": 201, "time": 200, "distance": 500 },
     { "start": 202, "end": 203, "time": 300, "distance": 400 },

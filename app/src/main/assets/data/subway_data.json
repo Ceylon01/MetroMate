@@ -107,6 +107,8 @@
     { "start": 122, "end": 121, "time": 300, "distance": 250 },
     { "start": 122, "end": 123, "time": 300, "distance": 200 },
     { "start": 123, "end": 122, "time": 300, "distance": 200 },
+    { "start": 123, "end": 101, "time": 300, "distance": 200 },
+    { "start": 101, "end": 123, "time": 300, "distance": 200 },
     { "start": 201, "end": 202, "time": 200, "distance": 500 },
     { "start": 202, "end": 201, "time": 200, "distance": 500 },
     { "start": 202, "end": 203, "time": 300, "distance": 400 },
