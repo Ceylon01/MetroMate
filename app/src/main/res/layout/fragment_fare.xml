@@ -19,7 +19,7 @@
             android:text="승객 정보"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="4dp" />
 
         <RadioGroup
             android:id="@+id/passenger_type_group"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/payment_method"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp" />
 
         <RadioGroup
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/departure_station"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp" />
 
         <AutoCompleteTextView
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/waypoint_station"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp" />
 
         <AutoCompleteTextView
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/arrival_station"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp" />
 
         <AutoCompleteTextView
