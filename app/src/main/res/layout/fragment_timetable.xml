@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="42dp"
-    android:padding="30dp">
+    android:padding="30dp"
+    android:gravity="center">
 
-    <!-- 시간표 제목 -->
-    <TextView
-        android:id="@+id/timetable_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="시간표"
-        android:textSize="24sp"
-        android:paddingBottom="34dp"
-        android:textAlignment="center"
-        android:textColor="@android:color/black" />
-
-    <!-- 호선 선택 Spinner -->
-    <Spinner
-        android:id="@+id/line_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/line_options" />
-
-    <!-- 시간표 리스트 -->
     <LinearLayout
-        android:id="@+id/timetable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:layout_marginTop="28dp"
+        android:orientation="vertical">
+
+        <!-- 시간표 제목 -->
+        <TextView
+            android:id="@+id/timetable_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시간표"
+            android:textSize="24sp"
+            android:paddingBottom="34dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+        <!-- 호선 선택 Spinner -->
+        <Spinner
+            android:id="@+id/line_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/line_options"
+            android:background="@drawable/background_spinner"
+            android:minHeight="48dp" />
+
+        <!-- 시간표 이미지 -->
+        <ImageView
+            android:id="@+id/timetable_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/timetable_1"
+            android:contentDescription="@string/timetable_image" />
+
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

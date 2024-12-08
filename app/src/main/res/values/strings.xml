@@ -49,5 +49,5 @@
         <item>3호선</item>
         <item>4호선</item>
     </string-array>
-
+    <string name="timetable_image">Timetable Image</string>
 </resources>
