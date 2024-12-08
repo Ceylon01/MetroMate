@@ -28,7 +28,7 @@
     <string name="child">어린이</string>
     <string name="payment_method">결제 방법</string>
     <string name="card">카드</string>
-    <string name="cash">현금</string>
+    <string name="cash">1회권</string>
     <string name="departure_station">출발역</string>
     <string name="departure_station_hint">출발역 입력</string>
     <string name="arrival_station">도착역</string>
@@ -39,5 +39,5 @@
     <string name="total_fare_label">총 요금:</string>
     <string name="initial_fare_result">0원</string>
     <string name="subway_map_description">노선도 이미지 뷰</string>
-
+    <string name="total_fare_result">총 요금: %d원</string>
 </resources>
