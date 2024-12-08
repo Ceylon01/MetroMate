@@ -50,7 +50,8 @@ public class FavoritesFragment extends Fragment {
         favoriteItems.addAll(favoriteManager.getFavoriteRoutes());
 
         // RecyclerView 어댑터 설정
-        favoritesAdapter = new FavoritesAdapter(favoriteItems, favoriteManager);
+        favoritesAdapter = new FavoritesAdapter(favoriteItems, favoriteManager, getContext());
+
         favoriteRecyclerView.setAdapter(favoritesAdapter);
     }
 }

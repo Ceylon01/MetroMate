@@ -1,5 +1,7 @@
 package com.metromate.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.metromate.R;
+import com.metromate.PathFinding.SearchActivity;
+import com.metromate.PathFinding.SearchResultActivity;
 import com.metromate.models.FavoriteRoute;
 import com.metromate.models.FavoriteStation;
 import com.metromate.utils.FavoriteManager;
@@ -23,10 +27,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     private List<Object> favoriteItems;  // 역과 경로를 모두 관리
     private FavoriteManager favoriteManager;
+    private Context context;
 
-    public FavoritesAdapter(List<Object> favoriteItems, FavoriteManager favoriteManager) {
+    public FavoritesAdapter(List<Object> favoriteItems, FavoriteManager favoriteManager, Context context) {
         this.favoriteItems = favoriteItems;
         this.favoriteManager = favoriteManager;
+        this.context = context;
     }
 
     @Override
@@ -58,6 +64,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             FavoriteStation station = (FavoriteStation) item;
             holder.stationNameTextView.setText(station.getName());
 
+            // 역 클릭 시 SearchActivity로 이동
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, SearchActivity.class);
+                intent.putExtra("stationName", station.getName());  // 역 이름을 넘겨줍니다.
+                context.startActivity(intent);
+            });
+
             // X 버튼 클릭 시 해당 역 삭제
             holder.deleteButton.setOnClickListener(v -> {
                 favoriteManager.removeFavoriteStation(station);  // FavoriteStation 객체 삭제
@@ -67,6 +80,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         } else if (holder.getItemViewType() == TYPE_ROUTE && item instanceof FavoriteRoute) {
             FavoriteRoute route = (FavoriteRoute) item;
             holder.routeNameTextView.setText(route.getRouteStations().toString());
+
+            // 경로 클릭 시 SearchResultActivity로 이동
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, SearchResultActivity.class);
+                intent.putExtra("routeStations", route.getRouteStations().toString());  // 경로 정보 넘겨줍니다.
+                context.startActivity(intent);
+            });
 
             // X 버튼 클릭 시 해당 경로 삭제
             holder.deleteButton.setOnClickListener(v -> {
