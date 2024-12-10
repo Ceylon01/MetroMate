@@ -128,23 +128,31 @@ public class SearchActivity extends AppCompatActivity {
 
         // 이전 역 클릭 이벤트
         previousStationView.setOnClickListener(v -> {
-            if (selectedStation != null && selectedStation.getPrevious() != null) {
-                String previousStationName = getStationNameById(Integer.parseInt(selectedStation.getPrevious()));
-                selectedStation = getStationByNameAndLine(previousStationName, selectedStation.getLine());
-                handleSearch(selectedStation);
-            } else {
-                Toast.makeText(this, "이전 역이 없습니다.", Toast.LENGTH_SHORT).show();
+            if (selectedStation != null) {
+                // 이전 역이 null인 경우 종착역으로 표시
+                if (selectedStation.getPrevious() == null || selectedStation.getPrevious().equals("0")) {
+                    previousStationView.setText("◀ 종착역");
+                    // 이전 역이 없으면 종착역으로 표시하고 그 이후 기능 중단
+                } else {
+                    String previousStationName = getStationNameById(Integer.parseInt(selectedStation.getPrevious()));
+                    selectedStation = getStationByNameAndLine(previousStationName, selectedStation.getLine());
+                    handleSearch(selectedStation);  // 이전 역으로 넘어감
+                }
             }
         });
 
         // 다음 역 클릭 이벤트
         nextStationView.setOnClickListener(v -> {
-            if (selectedStation != null && selectedStation.getNext() != null) {
-                String nextStationName = getStationNameById(Integer.parseInt(selectedStation.getNext()));
-                selectedStation = getStationByNameAndLine(nextStationName, selectedStation.getLine());
-                handleSearch(selectedStation);
-            } else {
-                Toast.makeText(this, "다음 역이 없습니다.", Toast.LENGTH_SHORT).show();
+            if (selectedStation != null) {
+                // 다음 역이 null인 경우 종착역으로 표시
+                if (selectedStation.getNext() == null || selectedStation.getNext().equals("0")) {
+                    nextStationView.setText("종착역 ▶");
+                    // 다음 역이 없으면 종착역으로 표시하고 그 이후 기능 중단
+                } else {
+                    String nextStationName = getStationNameById(Integer.parseInt(selectedStation.getNext()));
+                    selectedStation = getStationByNameAndLine(nextStationName, selectedStation.getLine());
+                    handleSearch(selectedStation);  // 다음 역으로 넘어감
+                }
             }
         });
 
@@ -231,8 +239,9 @@ public class SearchActivity extends AppCompatActivity {
         String nextStationName = getStationNameById(Integer.parseInt(station.getNext()));
 
         currentStationView.setText(station.getName() + " (" + station.getLine() + "호선)");
-        previousStationView.setText(previousStationName != null ? previousStationName + " ◀" : "◀ 종착");
-        nextStationView.setText(nextStationName != null ? "▶ " + nextStationName : "종착 ▶");
+
+        previousStationView.setText(previousStationName != null ? previousStationName + " ◀" : "◀ 종착역");
+        nextStationView.setText(nextStationName != null ? "▶ " + nextStationName : "종착역 ▶");
     }
 
     private String getStationNameById(int id) {
@@ -270,10 +279,15 @@ public class SearchActivity extends AppCompatActivity {
                     int id = Integer.parseInt(stationData.get("id"));
                     String name = stationData.get("name");
                     String line = stationData.get("line");
+
+                    // Check for null and assign default values if necessary
                     String previous = stationData.get("previous");
                     String next = stationData.get("next");
-                    String subwayType = stationData.get("subwayType");  // 추가된 subwayType
-                    String subwayStatus = stationData.get("subwayStatus"); // 추가된 subwayStatus
+                    previous = (previous != null) ? previous : "0"; // Default to "0" or any valid ID
+                    next = (next != null) ? next : "0"; // Default to "0" or any valid ID
+
+                    String subwayType = stationData.get("subwayType");
+                    String subwayStatus = stationData.get("subwayStatus");
 
                     Station station = new Station(id, name, line, previous, next, subwayType, subwayStatus);
                     stationMap.putIfAbsent(name, new ArrayList<>());
