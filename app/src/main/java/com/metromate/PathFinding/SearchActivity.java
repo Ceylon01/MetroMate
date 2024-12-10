@@ -225,11 +225,27 @@ public class SearchActivity extends AppCompatActivity {
         if (station != null) {
             selectedStation = station;
             String displayName = station.getName() + " (" + station.getLine() + "호선)";
-            if (!recentSearches.contains(displayName)) {
-                recentSearches.add(0, displayName);
-                saveRecentSearches();
-                recentSearchesAdapter.notifyDataSetChanged();
+
+            // 이미 최근 검색 목록에 존재하는 항목이 있으면 그 항목을 맨 뒤로 이동
+            if (recentSearches.contains(displayName)) {
+                recentSearches.remove(displayName);  // 기존 항목 제거
             }
+
+            // 검색 기록에 새 항목 추가 (기존에 없으면 맨 앞에 추가)
+            recentSearches.add(0, displayName);  // 맨 앞에 추가
+
+            // 최대 10개의 기록만 저장하도록 갱신
+            if (recentSearches.size() > 10) {
+                recentSearches.remove(recentSearches.size() - 1);  // 10개 초과 시 가장 오래된 항목 삭제
+            }
+
+            // 갱신된 검색 기록을 저장
+            saveRecentSearches();
+
+            // 어댑터 갱신
+            recentSearchesAdapter.notifyDataSetChanged();
+
+            // 화면 갱신
             updateSearchResult(station);
         }
     }
@@ -316,12 +332,19 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void saveRecentSearches() {
+        // 최대 10개의 검색 기록을 저장하도록 제한
+        if (recentSearches.size() > 10) {
+            recentSearches.remove(recentSearches.size() - 1);  // 10개 초과시 가장 오래된 항목을 삭제
+        }
+
         StringBuilder data = new StringBuilder();
         for (String search : recentSearches) {
             data.append(search).append(",");
         }
+
         sharedPreferences.edit().putString(RECENT_SEARCHES_KEY, data.toString()).apply();
     }
+
 
     private void navigateToQuickPathActivity(String startStation, String startLine, String transferStation, String transferLine, String endStation, String endLine) {
         Intent intent = new Intent(this, QuickPathActivity.class);
