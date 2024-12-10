@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // 중간 상태로 시작
         bottomSheetBehavior.setHideable(true); // 완전히 숨길 수 있도록 설정
 
+
+
         // UI 요소 초기화
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottom_navigation);

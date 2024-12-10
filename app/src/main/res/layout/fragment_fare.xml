@@ -1,10 +1,14 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -151,8 +155,8 @@
             android:id="@+id/fare_result_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:text="@string/total_fare_label"
-            android:layout_marginTop="24dp"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -162,7 +166,7 @@
             android:layout_height="wrap_content"
             android:text="@string/initial_fare_result"
             android:textSize="18sp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="1dp" />
 
     </LinearLayout>
 </ScrollView>
