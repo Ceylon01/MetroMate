@@ -14,12 +14,10 @@
     <string name="resize_indicator">슬라이드 핸들</string>
     <string name="splash_image">스플래시 이미지</string>
     <string name="find_path_button">경로 찾기 버튼</string>
-    <string name="goBack_description">되돌리기</string>
     <string name="hint_departure_input">출발지</string>
     <string name="hint_destination_input">도착지</string>
     <string name="hint_stopover_input">경유지</string>
     <string name="button_stopover">경유지 추가</string>
-    <string name="button_swap">swap</string>
     <string name="fare_result">총 요금: %d원</string>
     <string name="passenger_info">승객 정보</string>
     <string name="adult">성인</string>
