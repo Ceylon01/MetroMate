@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private View bottomNavigationView;
     private View searchBar;
     private Handler handler = new Handler();
+    private boolean isFareTabClicked = false;  // 요금 탭 클릭 방지용 플래그
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         // 드로어 메뉴 항목 클릭 리스너
         navigationView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menu_notice) {
-                startActivity(new Intent(MainActivity.this,NoticeActivity.class));
+                startActivity(new Intent(MainActivity.this, NoticeActivity.class));
             } else if (item.getItemId() == R.id.menu_terms_of_service) {
                 startActivity(new Intent(MainActivity.this, TermsOfServiceActivity.class));
             } else if (item.getItemId() == R.id.menu_privacy_policy) {
@@ -122,7 +123,11 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_favorites) {
                 selectedFragment = new FavoritesFragment();
             } else if (item.getItemId() == R.id.nav_fare) {
-                selectedFragment = new FareFragment();
+                if (!isFareTabClicked) {  // 클릭을 막는 플래그 체크
+                    isFareTabClicked = true;  // 클릭 처리
+                    selectedFragment = new FareFragment();  // 요금 탭 클릭 시 FareFragment로 이동
+                    handler.postDelayed(() -> isFareTabClicked = false, 500);  // 0.5초 후 클릭 방지 해제
+                }
             } else if (item.getItemId() == R.id.nav_timetable) {
                 selectedFragment = new TimetableFragment();
             }
