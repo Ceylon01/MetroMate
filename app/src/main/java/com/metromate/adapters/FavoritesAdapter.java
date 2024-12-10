@@ -16,16 +16,17 @@ import com.metromate.PathFinding.SearchActivity;
 import com.metromate.models.FavoriteStation;
 import com.metromate.utils.FavoriteManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> {
 
-    private final List<FavoriteStation> favoriteStations;  // 즐겨찾기 역만 관리
-    private final FavoriteManager favoriteManager;  // final로 선언
-    private final Context context;  // final로 선언
+    private List<FavoriteStation> favoriteStations;
+    private final FavoriteManager favoriteManager;
+    private final Context context;
 
     public FavoritesAdapter(List<FavoriteStation> favoriteStations, FavoriteManager favoriteManager, Context context) {
-        this.favoriteStations = favoriteStations;
+        this.favoriteStations = new ArrayList<>(favoriteStations); // 불변성 보장을 위해 복사본 생성
         this.favoriteManager = favoriteManager;
         this.context = context;
     }
@@ -39,34 +40,54 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-        // 해당 역 정보를 가져옵니다.
         final FavoriteStation station = favoriteStations.get(position);
         holder.stationNameTextView.setText(station.getName());
 
         // 역 클릭 시 SearchActivity로 이동
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SearchActivity.class);
-            intent.putExtra("stationName", station.getName());  // 역 이름을 넘겨줍니다.
+            intent.putExtra("stationName", station.getName());
             context.startActivity(intent);
         });
 
         // X 버튼 클릭 시 해당 역 삭제
         holder.deleteButton.setOnClickListener(v -> {
-            // FavoriteManager에서 역 삭제
-            favoriteManager.removeFavoriteStation(station);
-            // 리스트에서 역 제거
-            favoriteStations.remove(station);
-            // RecyclerView 갱신
-            notifyItemRemoved(position);
+            removeStation(position); // 삭제 로직 분리
         });
     }
 
     @Override
     public int getItemCount() {
-        return favoriteStations.size();  // 즐겨찾기 역의 개수 반환
+        return favoriteStations.size();
     }
 
-    // FavoriteViewHolder는 역을 위한 뷰 홀더
+    /**
+     * 데이터 업데이트 메서드: 새로운 리스트로 갱신
+     */
+    public void updateData(List<FavoriteStation> newFavoriteStations) {
+        this.favoriteStations = new ArrayList<>(newFavoriteStations); // 새로운 데이터로 교체
+        notifyDataSetChanged(); // 전체 업데이트
+    }
+
+    /**
+     * 리스트에서 역 삭제 및 RecyclerView 업데이트
+     */
+    private void removeStation(int position) {
+        if (position < 0 || position >= favoriteStations.size()) return;
+
+        // FavoriteManager에서 역 삭제
+        FavoriteStation stationToRemove = favoriteStations.get(position);
+        favoriteManager.removeFavoriteStation(stationToRemove);
+
+        // 리스트에서 삭제 후 RecyclerView 갱신
+        favoriteStations.remove(position);
+        notifyItemRemoved(position);
+
+        // notifyItemRangeChanged로 삭제 후의 뷰 위치 업데이트
+        notifyItemRangeChanged(position, favoriteStations.size());
+    }
+
+    // FavoriteViewHolder 클래스
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         TextView stationNameTextView;
         ImageView deleteButton;
@@ -74,7 +95,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         public FavoriteViewHolder(View itemView) {
             super(itemView);
             stationNameTextView = itemView.findViewById(R.id.stationNameTextView);
-            deleteButton = itemView.findViewById(R.id.deleteButton);  // 삭제 버튼
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

@@ -6,7 +6,8 @@
     <string name="timetable_title">시간표</string>
     <string name="fare_title">요금 계산</string>
     <string name="fare_description">요금 계산 항목이 여기에 표시됩니다.</string>
-    <string name="settings_bookmark">즐겨찾기</string>
+    <string name="favorites_title">즐겨찾기</string>
+    <string name="favorites_settings">즐겨찾기</string>
     <string name="settings_description">앱 설정 항목이 여기에 표시됩니다.</string>
     <string name="dark_mode_option">다크 모드</string>
     <string name="notification_option">알림 설정</string>
@@ -36,11 +37,9 @@
     <string name="total_fare_label">총 요금:</string>
     <string name="initial_fare_result">0원</string>
     <string name="subway_map_description">노선도 이미지 뷰</string>
-    <string name="initial_route_count">내 경로 0</string>
-    <string name="empty_state_image_desc">경로가 없습니다.</string>
     <string name="empty_favorites_message">즐겨찾기가 비어 있습니다.</string>
-    <string name="empty_favorites_sub_message">즐겨찾기를 추가하여 빠르게 액세스하세요.</string>
-    <string name="settings_favorites">즐겨찾기</string>
+    <string name="empty_favorites_sub_message">역 검색 창에서 즐겨찾기를 추가하여\n빠르게 액세스하세요.</string>
+
     <string-array name="line_options">
         <item>1호선</item>
         <item>2호선</item>
