@@ -116,7 +116,7 @@ public class FareActivity extends AppCompatActivity {
         int totalFare = RouteCalculator.calculateTotalFare(edges, route);
 
         // 결과 표시
-        fareResultView.setText("총 요금: " + totalFare + "원");
+        fareResultView.setText(totalFare + "원");
     }
 
     private int getStationId(String name) {
