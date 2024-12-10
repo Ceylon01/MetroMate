@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -111,8 +110,7 @@ public class SearchActivity extends AppCompatActivity {
             String selectedItem = (String) parent.getItemAtPosition(position);
             String[] parts = selectedItem.split(" \\(");
             String stationName = parts[0];
-            String line = parts[1].replace("호선)", "");
-            selectedStation = getStationByNameAndLine(stationName, line);
+            selectedStation = getStationByName(stationName); // 호선 없이 역 이름만으로 검색
             handleSearch(selectedStation);
         });
 
@@ -121,8 +119,7 @@ public class SearchActivity extends AppCompatActivity {
             String recentItem = recentSearches.get(position);
             String[] parts = recentItem.split(" \\(");
             String stationName = parts[0];
-            String line = parts[1].replace("호선)", "");
-            selectedStation = getStationByNameAndLine(stationName, line);
+            selectedStation = getStationByName(stationName); // 호선 없이 역 이름만으로 검색
             handleSearch(selectedStation);
         });
 
@@ -135,8 +132,8 @@ public class SearchActivity extends AppCompatActivity {
                     // 이전 역이 없으면 종착역으로 표시하고 그 이후 기능 중단
                 } else {
                     String previousStationName = getStationNameById(Integer.parseInt(selectedStation.getPrevious()));
-                    selectedStation = getStationByNameAndLine(previousStationName, selectedStation.getLine());
-                    handleSearch(selectedStation);  // 이전 역으로 넘어감
+                    selectedStation = getStationByName(previousStationName);  // 이전 역으로 넘어감
+                    handleSearch(selectedStation);
                 }
             }
         });
@@ -147,11 +144,10 @@ public class SearchActivity extends AppCompatActivity {
                 // 다음 역이 null인 경우 종착역으로 표시
                 if (selectedStation.getNext() == null || selectedStation.getNext().equals("0")) {
                     nextStationView.setText("종착역 ▶");
-                    // 다음 역이 없으면 종착역으로 표시하고 그 이후 기능 중단
                 } else {
                     String nextStationName = getStationNameById(Integer.parseInt(selectedStation.getNext()));
-                    selectedStation = getStationByNameAndLine(nextStationName, selectedStation.getLine());
-                    handleSearch(selectedStation);  // 다음 역으로 넘어감
+                    selectedStation = getStationByName(nextStationName);  // 다음 역으로 넘어감
+                    handleSearch(selectedStation);
                 }
             }
         });
@@ -159,29 +155,30 @@ public class SearchActivity extends AppCompatActivity {
         // 출발역 설정
         startStationButton.setOnClickListener(v -> {
             if (selectedStation != null) {
-                navigateToQuickPathActivity(selectedStation.getName(), selectedStation.getLine(), null, null, null, null);
+                navigateToQuickPathActivity(selectedStation.getName(), null, null);
             } else {
                 Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // 경유역 설정
+// 경유역 설정
         transferStationButton.setOnClickListener(v -> {
             if (selectedStation != null) {
-                navigateToQuickPathActivity(null, null, selectedStation.getName(), selectedStation.getLine(), null, null);
+                navigateToQuickPathActivity(null, selectedStation.getName(), null);
             } else {
                 Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // 도착역 설정
+// 도착역 설정
         endStationButton.setOnClickListener(v -> {
             if (selectedStation != null) {
-                navigateToQuickPathActivity(null, null, null, null, selectedStation.getName(), selectedStation.getLine());
+                navigateToQuickPathActivity(null, null, selectedStation.getName());
             } else {
                 Toast.makeText(this, "먼저 역을 선택하세요.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         // 즐겨찾기 버튼 클릭 이벤트
         favoriteButton.setOnClickListener(v -> {
@@ -207,9 +204,20 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    // 역 이름만 찾기
+    private Station getStationByName(String name) {
+        for (List<Station> stations : stationMap.values()) {
+            for (Station station : stations) {
+                if (station.getName().equals(name)) {
+                    return station;
+                }
+            }
+        }
+        return null;
+    }
+
     // 자동으로 역 검색 처리하는 메서드
     private void searchForStationByName(String stationName) {
-        // 역을 자동으로 검색하고 해당 역 선택
         for (Map.Entry<String, List<Station>> entry : stationMap.entrySet()) {
             for (Station station : entry.getValue()) {
                 if (station.getName().equals(stationName)) {
@@ -224,7 +232,7 @@ public class SearchActivity extends AppCompatActivity {
     private void handleSearch(Station station) {
         if (station != null) {
             selectedStation = station;
-            String displayName = station.getName() + " (" + station.getLine() + "호선)";
+            String displayName = station.getName();  // 호선 제외, 역 이름만 사용
 
             // 이미 최근 검색 목록에 존재하는 항목이 있으면 그 항목을 맨 뒤로 이동
             if (recentSearches.contains(displayName)) {
@@ -254,7 +262,7 @@ public class SearchActivity extends AppCompatActivity {
         String previousStationName = getStationNameById(Integer.parseInt(station.getPrevious()));
         String nextStationName = getStationNameById(Integer.parseInt(station.getNext()));
 
-        currentStationView.setText(station.getName() + " (" + station.getLine() + "호선)");
+        currentStationView.setText(station.getName());
 
         previousStationView.setText(previousStationName != null ? previousStationName + " ◀" : "◀ 종착역");
         nextStationView.setText(nextStationName != null ? "▶ " + nextStationName : "종착역 ▶");
@@ -263,17 +271,6 @@ public class SearchActivity extends AppCompatActivity {
     private String getStationNameById(int id) {
         Station station = stationByIdMap.get(id);
         return station != null ? station.getName() : null;
-    }
-
-    private Station getStationByNameAndLine(String name, String line) {
-        if (stationMap.containsKey(name)) {
-            for (Station station : stationMap.get(name)) {
-                if (station.getLine().equals(line)) {
-                    return station;
-                }
-            }
-        }
-        return null;
     }
 
     private Map<String, List<Station>> loadStationDataFromJSON() {
@@ -296,16 +293,21 @@ public class SearchActivity extends AppCompatActivity {
                     String name = stationData.get("name");
                     String line = stationData.get("line");
 
-                    // Check for null and assign default values if necessary
+                    // 이전, 다음 역, 지하철 타입 및 상태에 대해 null 체크 후 기본값 설정
                     String previous = stationData.get("previous");
                     String next = stationData.get("next");
-                    previous = (previous != null) ? previous : "0"; // Default to "0" or any valid ID
-                    next = (next != null) ? next : "0"; // Default to "0" or any valid ID
-
                     String subwayType = stationData.get("subwayType");
                     String subwayStatus = stationData.get("subwayStatus");
 
+                    // 기본값 처리
+                    previous = (previous != null) ? previous : "0";
+                    next = (next != null) ? next : "0";
+                    subwayType = (subwayType != null) ? subwayType : "";
+                    subwayStatus = (subwayStatus != null) ? subwayStatus : "";
+
+                    // Station 객체 생성
                     Station station = new Station(id, name, line, previous, next, subwayType, subwayStatus);
+
                     stationMap.putIfAbsent(name, new ArrayList<>());
                     stationMap.get(name).add(station);
 
@@ -318,6 +320,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         return stationMap;
     }
+
 
     private ArrayList<String> loadRecentSearches() {
         String savedData = sharedPreferences.getString(RECENT_SEARCHES_KEY, "");
@@ -334,7 +337,7 @@ public class SearchActivity extends AppCompatActivity {
     private void saveRecentSearches() {
         // 최대 10개의 검색 기록을 저장하도록 제한
         if (recentSearches.size() > 10) {
-            recentSearches.remove(recentSearches.size() - 1);  // 10개 초과시 가장 오래된 항목을 삭제
+            recentSearches.remove(recentSearches.size() - 1);  // 10개 초과 시 가장 오래된 항목 삭제
         }
 
         StringBuilder data = new StringBuilder();
@@ -345,15 +348,13 @@ public class SearchActivity extends AppCompatActivity {
         sharedPreferences.edit().putString(RECENT_SEARCHES_KEY, data.toString()).apply();
     }
 
-
-    private void navigateToQuickPathActivity(String startStation, String startLine, String transferStation, String transferLine, String endStation, String endLine) {
+    private void navigateToQuickPathActivity(String startStation, String transferStation, String endStation) {
         Intent intent = new Intent(this, QuickPathActivity.class);
         if (startStation != null) intent.putExtra("startStation", startStation);
-        if (startLine != null) intent.putExtra("startLine", startLine);
         if (transferStation != null) intent.putExtra("transferStation", transferStation);
-        if (transferLine != null) intent.putExtra("transferLine", transferLine);
         if (endStation != null) intent.putExtra("endStation", endStation);
-        if (endLine != null) intent.putExtra("endLine", endLine);
         startActivity(intent);
     }
+
+
 }
