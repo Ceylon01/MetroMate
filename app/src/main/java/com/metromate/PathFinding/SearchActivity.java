@@ -232,7 +232,8 @@ public class SearchActivity extends AppCompatActivity {
     private void handleSearch(Station station) {
         if (station != null) {
             selectedStation = station;
-            String displayName = station.getName();  // 호선 제외, 역 이름만 사용
+            // 역 이름과 호선을 함께 표시
+            String displayName = station.getName() + " (" + station.getLine() + "호선)";  // 호선도 포함
 
             // 이미 최근 검색 목록에 존재하는 항목이 있으면 그 항목을 맨 뒤로 이동
             if (recentSearches.contains(displayName)) {
@@ -257,6 +258,7 @@ public class SearchActivity extends AppCompatActivity {
             updateSearchResult(station);
         }
     }
+
 
     private void updateSearchResult(Station station) {
         String previousStationName = getStationNameById(Integer.parseInt(station.getPrevious()));
