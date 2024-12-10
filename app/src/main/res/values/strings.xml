@@ -47,4 +47,5 @@
         <item>4호선</item>
     </string-array>
     <string name="timetable_image">Timetable Image</string>
+    <string name="passenger_type">승객 정보</string>
 </resources>
