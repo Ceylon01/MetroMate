@@ -1,8 +1,9 @@
 package com.metromate.PathFinding;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -28,6 +29,10 @@ public class QuickPathActivity extends AppCompatActivity {
     private List<String> recentSearches; // 최근 검색 기록
     private ArrayAdapter<String> recentSearchesAdapter;
 
+    private SharedPreferences sharedPreferences;
+    private static final String RECENT_SEARCHES_KEY = "recent_searches_quickpath";  // QuickPath 전용 저장 키
+    private static final String RECENT_STATION_SEARCHES_KEY = "recent_station_searches"; // 역 검색 기록
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +45,17 @@ public class QuickPathActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         recentSearchesListView = findViewById(R.id.recent_searches_list);
 
-        // Intent에서 전달된 데이터 처리
-        handleIncomingData();
+        // SharedPreferences로부터 최근 검색 기록 로드
+        sharedPreferences = getSharedPreferences("QuickPathPrefs", Context.MODE_PRIVATE);
+        recentSearches = loadRecentSearches();
+        recentSearchesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentSearches);
+        recentSearchesListView.setAdapter(recentSearchesAdapter);
 
         // 역 데이터 로드
         SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
             @Override
             public void onDataLoaded(SubwayData subwayData) {
                 if (subwayData != null) {
-                    Log.d("QuickPathActivity", "역 데이터 로드 성공");
                     stationNames = new ArrayList<>();
                     for (Station station : subwayData.getStations()) {
                         stationNames.add(station.getName());
@@ -60,16 +67,10 @@ public class QuickPathActivity extends AppCompatActivity {
                     waypointStationInput.setAdapter(stationAdapter);
                     endStationInput.setAdapter(stationAdapter);
                 } else {
-                    Log.e("QuickPathActivity", "역 데이터 로드 실패");
                     Toast.makeText(QuickPathActivity.this, "역 데이터 로드 실패", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        // 최근 검색어 초기화
-        recentSearches = new ArrayList<>();
-        recentSearchesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentSearches);
-        recentSearchesListView.setAdapter(recentSearchesAdapter);
 
         // 검색 버튼 클릭 이벤트
         searchButton.setOnClickListener(v -> handlePathSearch());
@@ -79,24 +80,6 @@ public class QuickPathActivity extends AppCompatActivity {
             String selectedRecord = recentSearches.get(position);
             handleRecentSearch(selectedRecord);
         });
-    }
-
-    // Intent로 전달된 데이터를 처리하여 입력 필드에 채우기
-    private void handleIncomingData() {
-        Intent intent = getIntent();
-        String start = intent.getStringExtra("startStation");
-        String transfer = intent.getStringExtra("transferStation");
-        String end = intent.getStringExtra("endStation");
-
-        if (start != null) {
-            startStationInput.setText(start);
-        }
-        if (transfer != null) {
-            waypointStationInput.setText(transfer);
-        }
-        if (end != null) {
-            endStationInput.setText(end);
-        }
     }
 
     // 입력값을 처리하고 SearchResultActivity로 전달
@@ -112,9 +95,45 @@ public class QuickPathActivity extends AppCompatActivity {
 
         // 최근 검색 기록에 추가
         String recentRecord = waypoint.isEmpty() ? start + " → " + end : start + " → " + waypoint + " → " + end;
-        if (!recentSearches.contains(recentRecord)) {
+
+        // 이미 존재하면 맨 앞에 올리기
+        if (recentSearches.contains(recentRecord)) {
+            recentSearches.remove(recentRecord);  // 기존 항목 제거
+            recentSearches.add(0, recentRecord);  // 맨 앞에 추가
+        } else {
+            // 맨 앞에 추가하고, 최대 10개까지만 저장
             recentSearches.add(0, recentRecord);
-            recentSearchesAdapter.notifyDataSetChanged();
+            if (recentSearches.size() > 10) {
+                recentSearches.remove(recentSearches.size() - 1);  // 가장 오래된 항목 삭제
+            }
+        }
+
+        // 최근 검색 기록 갱신
+        saveRecentSearches();  // 저장
+        recentSearchesAdapter.notifyDataSetChanged();
+
+        // SearchResultActivity로 데이터 전달
+        Intent intent = new Intent(QuickPathActivity.this, SearchResultActivity.class);
+        intent.putExtra("startStation", start);
+        intent.putExtra("waypointStation", waypoint);
+        intent.putExtra("endStation", end);
+        startActivity(intent);
+    }
+
+
+    private void handleRecentSearch(String recentRecord) {
+        // 최근 기록에서 출발역, 경유역, 도착역 추출
+        String[] stations = recentRecord.split(" → ");
+        String start = stations[0].trim();
+        String waypoint = stations.length == 3 ? stations[1].trim() : "";
+        String end = stations.length == 3 ? stations[2].trim() : stations[1].trim();
+
+        // 최근 검색 기록에서 클릭된 항목을 맨 앞에 올리기
+        if (recentSearches.contains(recentRecord)) {
+            recentSearches.remove(recentRecord);  // 기존 항목 제거
+            recentSearches.add(0, recentRecord);  // 맨 앞에 추가
+            saveRecentSearches();  // 저장
+            recentSearchesAdapter.notifyDataSetChanged();  // 어댑터 갱신
         }
 
         // SearchResultActivity로 데이터 전달
@@ -125,19 +144,56 @@ public class QuickPathActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 최근 검색 기록을 처리하고 SearchResultActivity로 이동
-    private void handleRecentSearch(String recentRecord) {
-        // 최근 기록에서 출발역, 경유역, 도착역 추출
-        String[] stations = recentRecord.split(" → ");
-        String start = stations[0].trim();
-        String waypoint = stations.length == 3 ? stations[1].trim() : "";
-        String end = stations.length == 3 ? stations[2].trim() : stations[1].trim();
 
-        // SearchResultActivity로 데이터 전달
-        Intent intent = new Intent(QuickPathActivity.this, SearchResultActivity.class);
-        intent.putExtra("startStation", start);
-        intent.putExtra("waypointStation", waypoint);
-        intent.putExtra("endStation", end);
-        startActivity(intent);
+    // 최근 검색 기록 저장
+    private void saveRecentSearches() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        StringBuilder data = new StringBuilder();
+        for (String search : recentSearches) {
+            data.append(search).append(",");
+        }
+        // Remove trailing comma
+        if (data.length() > 0) {
+            data.deleteCharAt(data.length() - 1);
+        }
+        editor.putString(RECENT_SEARCHES_KEY, data.toString());
+        editor.apply();
+    }
+
+    // 최근 검색 기록 로드
+    private ArrayList<String> loadRecentSearches() {
+        String savedData = sharedPreferences.getString(RECENT_SEARCHES_KEY, "");
+        ArrayList<String> searches = new ArrayList<>();
+        if (!savedData.isEmpty()) {
+            String[] items = savedData.split(",");
+            for (String item : items) {
+                searches.add(item.trim());
+            }
+        }
+        return searches;
+    }
+
+    // 역 검색 기록 저장
+    private void saveRecentStationSearches() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        StringBuilder data = new StringBuilder();
+        for (String search : recentSearches) {
+            data.append(search).append(",");
+        }
+        editor.putString(RECENT_STATION_SEARCHES_KEY, data.toString());
+        editor.apply();
+    }
+
+    // 역 검색 기록 로드
+    private ArrayList<String> loadRecentStationSearches() {
+        String savedData = sharedPreferences.getString(RECENT_STATION_SEARCHES_KEY, "");
+        ArrayList<String> searches = new ArrayList<>();
+        if (!savedData.isEmpty()) {
+            String[] items = savedData.split(",");
+            for (String item : items) {
+                searches.add(item.trim());
+            }
+        }
+        return searches;
     }
 }
