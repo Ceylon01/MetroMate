@@ -13,7 +13,7 @@
         android:id="@+id/favorites_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="즐겨찾기"
+        android:text="@string/favorites_title"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal"> <!-- 기본적으로 숨김 -->
+        android:gravity="center_horizontal">
 
         <ImageView
             android:id="@+id/empty_state_image"
