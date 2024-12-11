@@ -1,27 +1,30 @@
 package com.metromate.PathFinding;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.metromate.R;
+import com.metromate.adapters.RouteStepAdapter;
 import com.metromate.models.Edge;
 import com.metromate.models.RouteCalculator;
 import com.metromate.models.Station;
 import com.metromate.models.SubwayData;
+import com.metromate.utils.LineColorManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SearchResultActivity extends AppCompatActivity {
 
     private TextView departureStationView, waypointStationView, arrivalStationView;
     private TextView travelDetailsView, travelCostView, travelTimeView;
-
+    private RecyclerView routeRecyclerView;
     private List<Station> stations; // 모든 역 데이터
     private List<Edge> edges; // 모든 경로 데이터
 
@@ -37,6 +40,10 @@ public class SearchResultActivity extends AppCompatActivity {
         travelDetailsView = findViewById(R.id.travel_details);
         travelCostView = findViewById(R.id.travel_cost);
         travelTimeView = findViewById(R.id.travel_time);
+        routeRecyclerView = findViewById(R.id.route_recycler_view);
+
+        // RecyclerView 설정
+        routeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 데이터 로드
         SubwayDataLoader.loadSubwayData(this, new SubwayDataLoader.OnDataLoadedListener() {
@@ -121,14 +128,17 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     private void displayRouteInfo(List<Integer> route) {
-        // 경로 이름으로 변환
-        List<String> routeNames = new ArrayList<>();
+        List<Station> routeStations = new ArrayList<>();
         for (int stationId : route) {
-            String stationName = getStationName(stationId);
-            if (stationName != null) {
-                routeNames.add(stationName);
+            Station station = getStationById(stationId);
+            if (station != null) {
+                routeStations.add(station);
             }
         }
+
+        Map<String, Integer> lineColorMap = LineColorManager.getLineColors(this);
+        RouteStepAdapter adapter = new RouteStepAdapter(this, routeStations, edges, lineColorMap);
+        routeRecyclerView.setAdapter(adapter);
 
         int totalTime = RouteCalculator.calculateTotalTime(edges, route);
         int totalFare = RouteCalculator.calculateTotalFare(edges, route);
@@ -139,10 +149,10 @@ public class SearchResultActivity extends AppCompatActivity {
         travelCostView.setText("카드 " + totalFare + "원");
     }
 
-    private String getStationName(int stationId) {
+    private Station getStationById(int id) {
         for (Station station : stations) {
-            if (station.getId() == stationId) {
-                return station.getName();
+            if (station.getId() == id) {
+                return station;
             }
         }
         return null;

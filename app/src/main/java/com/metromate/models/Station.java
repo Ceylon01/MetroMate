@@ -1,9 +1,12 @@
 package com.metromate.models;
 
+import java.util.List;
+
 public class Station {
     private int id;            // 역 ID
     private String name;       // 역 이름
-    private String line;       // 호선
+    private String line;        // 호선
+    private List<String> lines; // 추가된 필드: 해당 역이 포함된 모든 노선
     private String previous;   // 이전 역
     private String next;       // 다음 역
     private String subwayType; // 지하철 타입 (예: 1호선)
@@ -40,6 +43,8 @@ public class Station {
     public String getNext() {
         return next;
     }
+
+    public List<String> getLines() { return lines; }
 
     public String getSubwayType() {
         return subwayType; // subwayType 반환

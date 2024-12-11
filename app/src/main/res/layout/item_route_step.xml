@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical" >
+
+    <RelativeLayout
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <!-- 첫 번째 노선 색상 -->
+        <View
+            android:id="@+id/line_indicator_1"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/line1_color" />
+
+        <!-- 두 번째 노선 색상 (환승일 경우 표시) -->
+        <View
+            android:id="@+id/line_indicator_2"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/line2_color"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+    <!-- 역 정보 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp">
+
+            <TextView
+                android:id="@+id/tv_station_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="역 이름"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

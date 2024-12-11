@@ -15,6 +15,9 @@
     <color name="white">#FFFFFF</color>
 
 
-    <color name="icon_color">#002ABC</color> <!-- 원하는 색상 코드로 변경 -->
+    <color name="line1_color">#92d14f</color>
+    <color name="line2_color">#4155c6</color>
+    <color name="line3_color">#ffa800</color>
+    <color name="line4_color">#eb37a2</color>
 
 </resources>

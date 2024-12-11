@@ -39,7 +39,8 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.gson)
-    implementation(libs.transportation.consumer) // Gson 추가
+    implementation(libs.transportation.consumer)
+    implementation(libs.camera.core) // Gson 추가
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

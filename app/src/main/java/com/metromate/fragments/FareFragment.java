@@ -126,7 +126,7 @@ public class FareFragment extends Fragment {
         }
 
         fareResultView.setText(String.format(
-                "총 요금: %d원\n(결제 방식: %s, 승객 유형: %s)",
+                "%d원\n(결제 방식: %s, 승객 유형: %s)",
                 totalFare, paymentDescription, passengerDescription
         ));
     }
