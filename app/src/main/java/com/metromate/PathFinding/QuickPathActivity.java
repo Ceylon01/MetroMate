@@ -72,6 +72,22 @@ public class QuickPathActivity extends AppCompatActivity {
             }
         });
 
+        // Intent로 전달된 데이터 처리
+        String startStation = getIntent().getStringExtra("startStation");
+        String waypointStation = getIntent().getStringExtra("transferStation");
+        String endStation = getIntent().getStringExtra("endStation");
+
+        // 각 입력란에 데이터 설정
+        if (startStation != null) {
+            startStationInput.setText(startStation);
+        }
+        if (waypointStation != null) {
+            waypointStationInput.setText(waypointStation);
+        }
+        if (endStation != null) {
+            endStationInput.setText(endStation);
+        }
+
         // 검색 버튼 클릭 이벤트
         searchButton.setOnClickListener(v -> handlePathSearch());
 
@@ -120,7 +136,6 @@ public class QuickPathActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void handleRecentSearch(String recentRecord) {
         // 최근 기록에서 출발역, 경유역, 도착역 추출
         String[] stations = recentRecord.split(" → ");
@@ -143,7 +158,6 @@ public class QuickPathActivity extends AppCompatActivity {
         intent.putExtra("endStation", end);
         startActivity(intent);
     }
-
 
     // 최근 검색 기록 저장
     private void saveRecentSearches() {

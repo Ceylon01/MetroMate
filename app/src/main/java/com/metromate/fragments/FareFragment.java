@@ -1,13 +1,16 @@
 package com.metromate.fragments;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +33,8 @@ public class FareFragment extends Fragment {
     private AutoCompleteTextView startStationInput, waypointStationInput, endStationInput;
     private Button calculateFareButton;
     private TextView fareResultView;
-    private RadioGroup passengerTypeGroup, paymentTypeGroup; // 결제 방식 추가
+    private RadioGroup passengerTypeGroup, paymentTypeGroup;
+    private ScrollView scrollView; // ScrollView 추가
 
     private List<Edge> edges;
     private List<Station> stations;
@@ -47,7 +51,10 @@ public class FareFragment extends Fragment {
         calculateFareButton = view.findViewById(R.id.calculate_fare_button);
         fareResultView = view.findViewById(R.id.fare_result);
         passengerTypeGroup = view.findViewById(R.id.passenger_type_group);
-        paymentTypeGroup = view.findViewById(R.id.payment_type_group); // 결제 방식 추가
+        paymentTypeGroup = view.findViewById(R.id.payment_type_group);
+        scrollView = view.findViewById(R.id.scroll_view); // ScrollView 가져오기
+
+        setupKeyboardScroll(view); // 키보드 감지 및 스크롤 기능 추가
 
         // 지하철 데이터 로드
         SubwayDataLoader.loadSubwayData(requireContext(), new SubwayDataLoader.OnDataLoadedListener() {
@@ -77,6 +84,27 @@ public class FareFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 소프트 키보드가 올라올 때, 입력 필드가 가려지지 않도록 ScrollView를 스크롤합니다.
+     */
+    private void setupKeyboardScroll(View rootView) {
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+
+            boolean isKeyboardVisible = keypadHeight > screenHeight * 0.15;
+
+            if (isKeyboardVisible) {
+                View focusedView = requireActivity().getCurrentFocus();
+                if (focusedView != null && focusedView instanceof AutoCompleteTextView) {
+                    scrollView.post(() -> scrollView.smoothScrollTo(0, focusedView.getBottom()));
+                }
+            }
+        });
+    }
+
     private void calculateFare() {
         String startStationName = startStationInput.getText().toString().trim();
         String waypointStationName = waypointStationInput.getText().toString().trim();
@@ -104,13 +132,10 @@ public class FareFragment extends Fragment {
 
         String passengerType = getPassengerType();
         String paymentType = getPaymentType();
-
-        // 결제 방식에 따라 추가 매개변수 전달
         boolean optimizeForCard = paymentType.equals("card");
 
         int totalFare = FareRouteCalculator.calculateFare(edges, route, passengerType, !optimizeForCard);
 
-        // 결제 방식에 따라 결과 표시
         String paymentDescription = optimizeForCard ? "카드" : "1회권";
         String passengerDescription;
         switch (passengerType) {

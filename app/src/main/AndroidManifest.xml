@@ -20,29 +20,55 @@
             </intent-filter>
         </activity>
 
-        <!-- MainActivity 설정 -->
-        <activity android:name=".MainActivity" android:exported="true" />
+        <!-- MainActivity 등록 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- SearchActivity 등록 -->
         <activity
             android:name=".PathFinding.SearchActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <!-- QuickPathActivity 등록 -->
-        <activity android:name=".PathFinding.QuickPathActivity" android:exported="true" />
+        <activity
+            android:name=".PathFinding.QuickPathActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- SearchResultActivity 등록 -->
-        <activity android:name=".PathFinding.SearchResultActivity" android:exported="true" />
+        <activity
+            android:name=".PathFinding.SearchResultActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- FareActivity 등록 -->
-        <activity android:name=".fare.FareActivity" android:exported="true" />
+        <activity
+            android:name=".fare.FareActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- NoticeActivity 등록 -->
+        <activity
+            android:name=".NoticeActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- TermsOfServiceActivity 등록 -->
+        <activity
+            android:name=".TermsOfServiceActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- PrivacyPolicyActivity 등록 -->
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
 
-        <activity android:name=".NoticeActivity" />
-        <activity android:name=".TermsOfServiceActivity" />
-        <activity android:name=".PrivacyPolicyActivity" />
 
     </application>
 </manifest>
