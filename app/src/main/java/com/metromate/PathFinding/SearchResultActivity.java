@@ -145,7 +145,7 @@ public class SearchResultActivity extends AppCompatActivity {
         int totalStations = route.size() - 1;
 
         travelTimeView.setText(totalTime + "분 소요");
-        travelDetailsView.setText(totalStations + "개 역 경유");
+        travelDetailsView.setText(totalStations + "개 역 이동");
         travelCostView.setText("카드 " + totalFare + "원");
     }
 
